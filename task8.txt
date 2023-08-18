@@ -1,0 +1,167 @@
+#.env
+GITLAB_API_KEY = glpat-Xnoq6CBYDbNt1aQahrCe
+GITLAB_URL = https://gitlab.com
+
+#access_gitlab.py
+import gitlab
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+#load_dotenv()  #load all the variables in the .env file
+gitlab_url = os.getenv('GITLAB_URL')
+api_key = os.getenv('GITLAB_API_KEY')
+prv_token = os.getenv('GITLAB_PRIVATE_TOKEN')
+
+gl = gitlab.Gitlab(gitlab_url, prv_token)  #session=True
+
+group_path = "group2854822"
+group = gl.groups.get(group_path)
+
+repositories = group.projects.list(all=True)
+for repo in repositories:
+    print(repo.get_id())
+    
+
+
+
+#projects = gl.projects.get(id=44292581)
+#file = projects.files.get("RahulS141999/clusterrole-crb", ref= "main")
+#print(projects.file)
+
+
+#'RahulS141999/clusterrole-crb'
+'''import requests
+
+gitlab_url =  "https://gitlab.com/dashboard/projects"
+api_key = "glpat-aUnzEnxbEXfq2n-YrcHf"
+
+headers = { "private-token": api_key}
+
+response = requests.get(gitlab_url + "projects", headers = headers)
+
+if response.status_code == 200:
+    projects = response.json()
+    for project in projects:
+        print(project["name"])
+else:
+    print("Error:", response.text)'''
+
+
+
+
+#access_project.py
+import gitlab
+import os
+from gitlab import GitlabGetError
+from dotenv import load_dotenv
+
+load_dotenv()
+
+gitlab_url = os.environ.get('GITLAB_URL')
+api_key = os.environ.get('GITLAB_API_KEY')
+prv_token = os.environ.get('GITLAB_PRIVATE_TOKEN')
+
+gl = gitlab.Gitlab(gitlab_url, prv_token)
+
+
+group_id = 68176481# group path 
+
+try:
+    group = gl.groups.get(group_id)
+
+    projects = group.projects.list()
+    print(f"projects in group'{group_id}': ")
+
+    for project in projects:
+        print("Project Name: ", project.name)
+
+except GitlabGetError as e:
+    print(f"Error accessing group'{group_id}':  ")
+
+except Exception as e: 
+    print(f" Error is there , check the access or group id '{group_id}': ")
+
+#github_login.py
+
+
+from github import Github
+
+api_key = "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"
+g =Github(api_key)
+
+user = g.get_user()
+repositories = user.get_repos()
+
+for repo in repositories:
+    print(repo.full_name)
+
+
+#gitlab_o.py
+'''
+#group details
+import gitlab
+
+gitlab_url = "https://gitlab.com"
+
+api_key = "glpat-aUnzEnxbEXfq2n-YrcHf"
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)  #session=True
+
+group_id = 68018261
+group = gl.groups.get(group_id)
+
+print("group_Id: ", group.id)
+print("Group name: ", group.name)
+print("Group path: ", group.path)
+print("Group description: ", group.description)
+print("Group visibility: ", group.visibility)'''
+
+#using members to access group members
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+gitlab_url = os.environ.get('GITLAB_URL')
+api_key = os.environ.get('GITLAB_API_KEY')
+prv_token = os.environ.get('GITLAB_PRIVATE_TOKEN')
+gl = gitlab.Gitlab(gitlab_url, prv_token)  #session=True
+
+group_path = "group2854822"
+group = gl.groups.get(group_path) #retrive grps
+groups = gl.groups.list(all=True)        #list all 
+members = group.members.list()  #list group members
+
+
+for group in groups:
+    print("group_Id: ", group.id)
+    print("Group name: ", group.name)
+    print("Group path: ", group.path)
+    print("Group description: ", group.description)
+    print("Group visibility: ", group.visibility)
+    print("*"* 10)
+for member in members:
+    print("member_id: ", member.id)
+    print("member name: ", member.name)
+    print("Member username: ", member.username)
+    print("Group access level: ", member.access_level)
+
+
+#transfer_files_group.py
+import gitlab
+
+api_key = "glpat-Xnoq6CBYDbNt1aQahrCe"
+gitlab_url = "https://gitlab.com"
+
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+project_id = "43014500"
+project = gl.projects.get(project_id)
+
+group_path = "group2854822"
+group = gl.groups.get(group_path)
+
+project.transfer(group_path)
+
+print(f"Project id '{project_id}' has been transferred to '{group_path}' successfully.")
