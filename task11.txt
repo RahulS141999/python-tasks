@@ -1,0 +1,28 @@
+#.env
+GITLAB_API_KEY = glpat-Xnoq6CBYDbNt1aQahrCe
+GITLAB_URL = https://gitlab.com
+
+#authenticate_gitlab.py
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+gitlab_api_key = os.getenv('GITLAB_API_KEY')
+gitlab_url = os.getenv('GITLAB_URL')
+
+gl = gitlab.Gitlab(gitlab_url, private_token=gitlab_api_key)
+
+gl.auth()
+user = gl.user
+ 
+
+
+
+
+user_id = user.get_id
+print(f"**User info**")
+print(f"authenticated user ID : {user_id}")
+print(f"authenticated user name: {user.name}")
+print(f"authenticated user:  {user.name} (ID:{user.id})")
