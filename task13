@@ -1,0 +1,80 @@
+#.env
+GITLAB_URL = https://gitlab.com
+
+#create_project.py
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+gitlab_url = os.getenv("GITLAB_URL")
+gitlab_api_key = os.getenv("GITLAB_API_KEY")
+
+def create_proj(proj_name, file_name, file_content):
+    gl = gitlab.Gitlab(gitlab_url, private_token= gitlab_api_key)
+
+    project = gl.projects.create({"name": proj_name})
+    
+
+    project.files.create({
+        "file_path": file_name,
+        "branch": "master",
+        "content": file_content,
+        "commit_message": "Initial Commit",
+   } )
+    
+    print(f"project '{proj_name}'created with id '{project.id}' and file added successfully")
+
+if __name__ == "__main__":
+    proj_name= "project102"
+    file_name = "README.md"
+    file_content = "This is content of the file of project project101"
+
+    create_proj(proj_name, file_name, file_content)
+
+
+
+
+
+#update_project.py
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+gitlab_url = os.getenv("GITLAB_URL")
+api_key = os.getenv("GITLAB_API_KEY")
+
+
+def update_project_file(proj_id, file_name, new_content):
+    gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+    try:
+        project = gl.projects.get(proj_id)
+
+        try:
+
+            file_obj = project.files.get(file_path=file_name, ref="master")
+            file_obj.content = new_content
+            file_obj.save(
+                branch="master",
+                commit_message="Update file content",
+                encoding="text",
+            )
+
+            print(f"File content of the '{file_name}' having project_id '{project.id}' updated successfully")
+        except gitlab.exceptions.GitlabGetError:
+            print("file not found")
+
+    except Exception as e:
+        print("project not found")
+
+
+if __name__ == "__main__":
+    proj_id = 48222922
+    file_name = "README.md"
+    new_content = "This is project project101 and content is updated"
+
+    update_project_file(proj_id, file_name, new_content)
