@@ -1,0 +1,99 @@
+#.env
+GITLAB_API_KEY = glpat-aUnzEnxbEXfq2n-YrcHf
+GITLAB_URL = https://gitlab.com
+
+
+#create_repo.py
+import gitlab
+import os
+from dotenv import load_dotenv
+
+load_dotenv()#load_dotenv()  
+
+#load all the variables in the .env file
+
+gitlab_url = os.getenv('GITLAB_URL')
+api_key = os.getenv('GITLAB_API_KEY')
+
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+#creating new project
+proj_name = "my-proj1"
+proj_description = 'My new proj1'
+project = gl.projects.create({'name': proj_name, 'description': proj_description})
+
+#creating files in project with text
+file_path = 'program1.py'
+file_content = 'print("hello world")'
+project.files.create({'file_path': file_path, 'content': file_content, 'branch': 'master', 'commit_message': 'addfile'})
+print(f"project '{proj_name}' created successfully.")
+print(f"file '{file_path}' added successfully to repo")
+
+
+
+'''import gitlab
+from git.repo import Repo
+from gitlab import GitlabCreateError
+
+
+api_key = config.GITLAB_API_KEY
+url = config.GITLAB_URL
+
+gitlab_url = "https://gitlab.com"
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+
+#repo_name = "repo1" #repository name
+project_name = "project103"  # desired project name
+read_me_file = "readme file"  # project description
+
+try:
+
+    file_path = "README.md"
+    file_content = "file_content"
+    branch = "main"
+    commit_message = "Initial commit for readme"
+    
+    project = gl.projects.create({"name": project_name,"file_path": file_path,
+         "file_content": file_content,
+         "branch": branch,
+         "commit_message": commit_message,})
+    
+
+    
+    print(f"Repo '{project_name}', created successfully")
+
+except Exception as e:
+    print(f"error creating repository '{e}' ")
+
+#except GitlabCreateError as e:
+#    print(f"error creating readmefile '{file_content}': ")
+
+
+'''
+
+
+'''import gitlab
+
+api_key = "glpat-aUnzEnxbEXfq2n-YrcHf"
+gitlab_url = "https://gitlab.com"
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+
+project_name = "project102"
+project_description = "This is my project project101"
+visibility = "private"
+
+project = gl.projects.create (
+{    "name": project_name,
+    "description" : project_description,
+    "visibility" : visibility
+}
+)
+
+print("project created successfully")
+print("project URL:", project.web_url)
+
+
+#
+'''
