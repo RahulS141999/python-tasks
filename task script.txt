@@ -1,0 +1,1070 @@
+login as: ec2-user
+Authenticating with public key "helmchart01key"
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[ec2-user@ip-172-31-40-95 ~]$ sudo su
+[root@ip-172-31-40-95 ec2-user]# yum install docker -y
+service docker start
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /usr/local/bin/kind
+cd /usr/local/bin/
+echo $PATH
+export PATH=$PATH:/usr/local/cdbin
+kind --version
+
+mkdir kind-cluster
+cd kind-cluster
+vi config.yaml
+Last metadata expiration check: 0:23:45 ago on Wed Aug 16 11:53:49 2023.
+Dependencies resolved.
+================================================================================
+ Package                 Arch    Version                     Repository    Size
+================================================================================
+Installing:
+ docker                  x86_64  20.10.25-1.amzn2023.0.1     amazonlinux   42 M
+Installing dependencies:
+ containerd              x86_64  1.7.2-1.amzn2023.0.1        amazonlinux   34 M
+ iptables-libs           x86_64  1.8.8-3.amzn2023.0.2        amazonlinux  401 k
+ iptables-nft            x86_64  1.8.8-3.amzn2023.0.2        amazonlinux  183 k
+ libcgroup               x86_64  3.0-1.amzn2023.0.1          amazonlinux   75 k
+ libnetfilter_conntrack  x86_64  1.0.8-2.amzn2023.0.2        amazonlinux   58 k
+ libnfnetlink            x86_64  1.0.1-19.amzn2023.0.2       amazonlinux   30 k
+ libnftnl                x86_64  1.2.2-2.amzn2023.0.2        amazonlinux   84 k
+ pigz                    x86_64  2.5-1.amzn2023.0.3          amazonlinux   83 k
+ runc                    x86_64  1.1.7-1.amzn2023.0.1        amazonlinux  3.0 M
+
+Transaction Summary
+================================================================================
+Install  10 Packages
+
+Total download size: 79 M
+Installed size: 306 M
+Downloading Packages:
+(1/10): libnfnetlink-1.0.1-19.amzn2023.0.2.x86_ 551 kB/s |  30 kB     00:00
+(2/10): libnftnl-1.2.2-2.amzn2023.0.2.x86_64.rp 1.4 MB/s |  84 kB     00:00
+(3/10): libcgroup-3.0-1.amzn2023.0.1.x86_64.rpm 1.1 MB/s |  75 kB     00:00
+(4/10): pigz-2.5-1.amzn2023.0.3.x86_64.rpm      4.3 MB/s |  83 kB     00:00
+(5/10): libnetfilter_conntrack-1.0.8-2.amzn2023 3.6 MB/s |  58 kB     00:00
+(6/10): iptables-libs-1.8.8-3.amzn2023.0.2.x86_  15 MB/s | 401 kB     00:00
+(7/10): iptables-nft-1.8.8-3.amzn2023.0.2.x86_6 4.9 MB/s | 183 kB     00:00
+(8/10): runc-1.1.7-1.amzn2023.0.1.x86_64.rpm     16 MB/s | 3.0 MB     00:00
+(9/10): containerd-1.7.2-1.amzn2023.0.1.x86_64.  45 MB/s |  34 MB     00:00
+(10/10): docker-20.10.25-1.amzn2023.0.1.x86_64.  39 MB/s |  42 MB     00:01
+--------------------------------------------------------------------------------
+Total                                            66 MB/s |  79 MB     00:01
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1
+  Installing       : runc-1.1.7-1.amzn2023.0.1.x86_64                      1/10
+  Installing       : containerd-1.7.2-1.amzn2023.0.1.x86_64                2/10
+  Running scriptlet: containerd-1.7.2-1.amzn2023.0.1.x86_64                2/10
+  Installing       : pigz-2.5-1.amzn2023.0.3.x86_64                        3/10
+  Installing       : libnftnl-1.2.2-2.amzn2023.0.2.x86_64                  4/10
+  Installing       : libnfnetlink-1.0.1-19.amzn2023.0.2.x86_64             5/10
+  Installing       : libnetfilter_conntrack-1.0.8-2.amzn2023.0.2.x86_64    6/10
+  Installing       : iptables-libs-1.8.8-3.amzn2023.0.2.x86_64             7/10
+  Installing       : iptables-nft-1.8.8-3.amzn2023.0.2.x86_64              8/10
+  Running scriptlet: iptables-nft-1.8.8-3.amzn2023.0.2.x86_64              8/10
+  Installing       : libcgroup-3.0-1.amzn2023.0.1.x86_64                   9/10
+  Running scriptlet: docker-20.10.25-1.amzn2023.0.1.x86_64                10/10
+  Installing       : docker-20.10.25-1.amzn2023.0.1.x86_64                10/10
+  Running scriptlet: docker-20.10.25-1.amzn2023.0.1.x86_64                10/10
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /usr/li                                                                                        b/systemd/system/docker.socket.
+
+  Verifying        : libcgroup-3.0-1.amzn2023.0.1.x86_64                   1/10
+  Verifying        : libnfnetlink-1.0.1-19.amzn2023.0.2.x86_64             2/10
+  Verifying        : libnftnl-1.2.2-2.amzn2023.0.2.x86_64                  3/10
+  Verifying        : pigz-2.5-1.amzn2023.0.3.x86_64                        4/10
+  Verifying        : iptables-libs-1.8.8-3.amzn2023.0.2.x86_64             5/10
+  Verifying        : libnetfilter_conntrack-1.0.8-2.amzn2023.0.2.x86_64    6/10
+  Verifying        : runc-1.1.7-1.amzn2023.0.1.x86_64                      7/10
+  Verifying        : docker-20.10.25-1.amzn2023.0.1.x86_64                 8/10
+  Verifying        : iptables-nft-1.8.8-3.amzn2023.0.2.x86_64              9/10
+  Verifying        : containerd-1.7.2-1.amzn2023.0.1.x86_64               10/10
+
+Installed:
+  containerd-1.7.2-1.amzn2023.0.1.x86_64
+  docker-20.10.25-1.amzn2023.0.1.x86_64
+  iptables-libs-1.8.8-3.amzn2023.0.2.x86_64
+  iptables-nft-1.8.8-3.amzn2023.0.2.x86_64
+  libcgroup-3.0-1.amzn2023.0.1.x86_64
+  libnetfilter_conntrack-1.0.8-2.amzn2023.0.2.x86_64
+  libnfnetlink-1.0.1-19.amzn2023.0.2.x86_64
+  libnftnl-1.2.2-2.amzn2023.0.2.x86_64
+  pigz-2.5-1.amzn2023.0.3.x86_64
+  runc-1.1.7-1.amzn2023.0.1.x86_64
+
+Complete!
+Redirecting to /bin/systemctl start docker.service
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    97  100    97    0     0    258      0 --:--:-- --:--:-- --:--:--   258
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0  4275k      0  0:00:01  0:00:01 --:--:-- 16.4M
+/root/.local/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb                                                                                        in:/bin:/var/lib/snapd/snap/bin
+kind version 0.17.0
+
+[root@ip-172-31-40-95 kind-cluster]#
+[root@ip-172-31-40-95 kind-cluster]#
+[root@ip-172-31-40-95 kind-cluster]# kind create cluster --config=config.yaml
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.3) 🖼
+ ✓ Preparing nodes 📦 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+⢆⡱ Joining worker nodes 🚜
+ ✓ Joining worker nodes 🚜
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+[root@ip-172-31-40-95 kind-cluster]#
+[root@ip-172-31-40-95 kind-cluster]# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+kubectl version --client
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    397      0 --:--:-- --:--:-- --:--:--   397
+100 47.5M  100 47.5M    0     0  42.1M      0  0:00:01  0:00:01 --:--:--  125M
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    403      0 --:--:-- --:--:-- --:--:--   402
+100    64  100    64    0     0    181      0 --:--:-- --:--:-- --:--:--   181
+kubectl: OK
+
+Client Version: v1.28.0
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+[root@ip-172-31-40-95 kind-cluster]#
+[root@ip-172-31-40-95 kind-cluster]# helm install
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+bash: helm: command not found
+[WARNING] Could not find git. It is required for plugin installation.
+grep: warning: stray \ before "
+Downloading https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz
+Verifying checksum... Done.
+Preparing to install helm into /usr/local/bin
+helm installed into /usr/local/bin/helm
+[root@ip-172-31-40-95 kind-cluster]# ls
+config.yaml  get_helm.sh  kubectl.sha256
+
+[root@ip-172-31-40-95 kind-cluster]# mkdir tomcat-helm-chart
+[root@ip-172-31-40-95 kind-cluster]# cd tomcat-helm-chart/
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm create tomcat
+
+Creating tomcat
+[root@ip-172-31-40-95 tomcat-helm-chart]#
+[root@ip-172-31-40-95 tomcat-helm-chart]# cd tomcat/
+[root@ip-172-31-40-95 tomcat]# ls
+Chart.yaml  charts  templates  values.yaml
+[root@ip-172-31-40-95 tomcat]# vi values.yaml
+[root@ip-172-31-40-95 tomcat]# cat values.yaml
+# Default values for tomcat.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: tomcat
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "9.0"
+
+imagePullSecrets: []
+nameOverride: "tomcat-app"
+fullnameOverride: "tomcat"
+
+persistence:
+  enabled: true
+  storageClass: standard
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "tomcat-serviceaccount1"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30005
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+[root@ip-172-31-40-95 tomcat]# cd ..
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm install tomcat ./tomcat
+Error: INSTALLATION FAILED: rendered manifests contain a resource that already exists. Unable to continue with install: could not get information about the resource ServiceAccount "tomcat-serviceaccount1" in namespace "default": Get "https://127.0.0.1:38551/api/v1/namespaces/default/serviceaccounts/tomcat-serviceaccount1": http2: client connection lost
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm install tomcat ./tomcat
+Error: INSTALLATION FAILED: 3 errors occurred:
+        * Post "https://127.0.0.1:38551/api/v1/namespaces/default/serviceaccounts?fieldManager=helm": http2: client connection lost
+        * Post "https://127.0.0.1:38551/api/v1/namespaces/default/services?fieldManager=helm": net/http: TLS handshake timeout
+        * Post "https://127.0.0.1:38551/apis/apps/v1/namespaces/default/deployments?fieldManager=helm": net/http: TLS handshake timeout
+
+
+
+[root@ip-172-31-40-95 tomcat-helm-chart]# cd tomcat/
+[root@ip-172-31-40-95 tomcat]# ls
+Chart.yaml  charts  templates  values.yaml
+[root@ip-172-31-40-95 tomcat]# vi values.yaml
+[root@ip-172-31-40-95 tomcat]# helm install tomcat ./tomcat
+Error: INSTALLATION FAILED: path "./tomcat" not found
+[root@ip-172-31-40-95 tomcat]# cd ..
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm install tomcat ./tomcat
+Error: INSTALLATION FAILED: cannot re-use a name that is still in use
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm install tomcat1 ./tomcat
+NAME: tomcat1
+LAST DEPLOYED: Wed Aug 16 12:42:33 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services tomcat)
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+[root@ip-172-31-40-95 tomcat-helm-chart]# helm list
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+tomcat1 default         1               2023-08-16 12:42:33.439358237 +0000 UTC deployed        tomcat-0.1.0    1.16.0
+[root@ip-172-31-40-95 tomcat-helm-chart]#
+**************************************************************************************************************************
+**************************************************************************************************************************
+
+
+
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# cd ..
+
+#bitnami repo added and pulled tomcat and unzipped it
+
+
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+tomcat  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# ls
+config.yaml  get_helm.sh  kubectl.sha256  tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+tomcat  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat#  pwd
+/usr/local/bin/kind-cluster/tomcat/tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# cp values.yaml tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+tomcat  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# ls
+config.yaml  get_helm.sh  kubectl.sha256  tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+tomcat  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# mv tomcat helm
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# pwd
+/usr/local/bin/kind-cluster/tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd helm
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cp values.yaml ../helm/
+cp: 'values.yaml' and '../helm/values.yaml' are the same file
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# pwd
+/usr/local/bin/kind-cluster/tomcat/helm
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cp /usr/local/bin/kind-cluster/tomcat/helm /usr/local/bin/kind-cluster/tomcat/
+cp: -r not specified; omitting directory '/usr/local/bin/kind-cluster/tomcat/helm'
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cp /usr/local/bin/kind-cluster/tomcat/helm/values.yaml  /usr/local/bin/kind-cluster/tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+Error: unknown command "tomcat" for "helm"
+Run 'helm --help' for usage.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+Error: unknown command "tomcat" for "helm"
+Run 'helm --help' for usage.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd helm/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd ,,
+bash: cd: ,,: No such file or directory
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd,..
+cd,..: command not found
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# ls
+config.yaml  get_helm.sh  kubectl.sha256  tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster# cd tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# rm -rf values.yaml 
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd helm/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# rm -rf helm/
+
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# mkdir helm
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd helm/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# tar -xvf ../tomcat-10.9.8.tgz
+tomcat/Chart.yaml
+tomcat/Chart.lock
+tomcat/values.yaml
+tomcat/templates/NOTES.txt
+tomcat/templates/_helpers.tpl
+tomcat/templates/_pod.tpl
+tomcat/templates/deployment.yaml
+tomcat/templates/extra-list.yaml
+tomcat/templates/ingress.yaml
+tomcat/templates/jmx-configmap.yaml
+tomcat/templates/networkpolicy.yaml
+tomcat/templates/podmonitor.yaml
+tomcat/templates/prometheusrule.yaml
+tomcat/templates/pvc.yaml
+tomcat/templates/secrets.yaml
+tomcat/templates/statefulset.yaml
+tomcat/templates/svc-headless.yaml
+tomcat/templates/svc.yaml
+tomcat/templates/tls-secrets.yaml
+tomcat/.helmignore
+tomcat/README.md
+tomcat/charts/common/Chart.yaml
+tomcat/charts/common/values.yaml
+tomcat/charts/common/templates/_affinities.tpl
+tomcat/charts/common/templates/_capabilities.tpl
+tomcat/charts/common/templates/_errors.tpl
+tomcat/charts/common/templates/_images.tpl
+tomcat/charts/common/templates/_ingress.tpl
+tomcat/charts/common/templates/_labels.tpl
+tomcat/charts/common/templates/_names.tpl
+tomcat/charts/common/templates/_secrets.tpl
+tomcat/charts/common/templates/_storage.tpl
+tomcat/charts/common/templates/_tplvalues.tpl
+tomcat/charts/common/templates/_utils.tpl
+tomcat/charts/common/templates/_warnings.tpl
+tomcat/charts/common/templates/validations/_cassandra.tpl
+tomcat/charts/common/templates/validations/_mariadb.tpl
+tomcat/charts/common/templates/validations/_mongodb.tpl
+tomcat/charts/common/templates/validations/_mysql.tpl
+tomcat/charts/common/templates/validations/_postgresql.tpl
+tomcat/charts/common/templates/validations/_redis.tpl
+tomcat/charts/common/templates/validations/_validations.tpl
+tomcat/charts/common/.helmignore
+tomcat/charts/common/README.md
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# pwd
+/usr/local/bin/kind-cluster/tomcat/helm/tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# cp /usr/local/bin/kind-cluster/tomcat/helm/tomcat/values.yaml /usr/local/bin/kind-cluster/tomcat/helm/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# vi values.yaml 
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+Error: unknown command "tomcat" for "helm"
+Run 'helm --help' for usage.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# ls
+helm  tomcat-10.9.8.tgz
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat# cd helm
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# helm --upgrade install tomcat -n tomcat --values=./values.yaml ./tomcat
+Error: unknown command "tomcat" for "helm"
+Run 'helm --help' for usage.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm --upgrade install tomcat -n tomcat --values=../values.yaml 
+Error: unknown command "tomcat" for "helm"
+Run 'helm --help' for usage.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm --upgrade tomcat --values=../values.yaml 
+Error: unknown flag: --upgrade
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm --upgrade tomcat --values=../values.yaml -h
+Error: unknown flag: --upgrade
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm --upgrade -h
+Error: unknown flag: --upgrade
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm -h
+The Kubernetes package manager
+
+Common actions for Helm:
+
+- helm search:    search for charts
+- helm pull:      download a chart to your local directory to view
+- helm install:   upload the chart to Kubernetes
+- helm list:      list releases of charts
+
+Environment variables:
+
+| Name                               | Description                                                                                       |
+|------------------------------------|---------------------------------------------------------------------------------------------------|
+| $HELM_CACHE_HOME                   | set an alternative location for storing cached files.                                             |
+| $HELM_CONFIG_HOME                  | set an alternative location for storing Helm configuration.                                       |
+| $HELM_DATA_HOME                    | set an alternative location for storing Helm data.                                                |
+| $HELM_DEBUG                        | indicate whether or not Helm is running in Debug mode                                             |
+| $HELM_DRIVER                       | set the backend storage driver. Values are: configmap, secret, memory, sql.                       |
+| $HELM_DRIVER_SQL_CONNECTION_STRING | set the connection string the SQL storage driver should use.                                      |
+| $HELM_MAX_HISTORY                  | set the maximum number of helm release history.                                                   |
+| $HELM_NAMESPACE                    | set the namespace used for the helm operations.                                                   |
+| $HELM_NO_PLUGINS                   | disable plugins. Set HELM_NO_PLUGINS=1 to disable plugins.                                        |
+| $HELM_PLUGINS                      | set the path to the plugins directory                                                             |
+| $HELM_REGISTRY_CONFIG              | set the path to the registry config file.                                                         |
+| $HELM_REPOSITORY_CACHE             | set the path to the repository cache directory                                                    |
+| $HELM_REPOSITORY_CONFIG            | set the path to the repositories file.                                                            |
+| $KUBECONFIG                        | set an alternative Kubernetes configuration file (default "~/.kube/config")                       |
+| $HELM_KUBEAPISERVER                | set the Kubernetes API Server Endpoint for authentication                                         |
+| $HELM_KUBECAFILE                   | set the Kubernetes certificate authority file.                                                    |
+| $HELM_KUBEASGROUPS                 | set the Groups to use for impersonation using a comma-separated list.                             |
+| $HELM_KUBEASUSER                   | set the Username to impersonate for the operation.                                                |
+| $HELM_KUBECONTEXT                  | set the name of the kubeconfig context.                                                           |
+| $HELM_KUBETOKEN                    | set the Bearer KubeToken used for authentication.                                                 |
+| $HELM_KUBEINSECURE_SKIP_TLS_VERIFY | indicate if the Kubernetes API server's certificate validation should be skipped (insecure)       |
+| $HELM_KUBETLS_SERVER_NAME          | set the server name used to validate the Kubernetes API server certificate                        |
+| $HELM_BURST_LIMIT                  | set the default burst limit in the case the server contains many CRDs (default 100, -1 to disable)|
+
+Helm stores cache, configuration, and data based on the following configuration order:
+
+- If a HELM_*_HOME environment variable is set, it will be used
+- Otherwise, on systems supporting the XDG base directory specification, the XDG variables will be used
+- When no other location is set a default location will be used based on the operating system
+
+By default, the default directories depend on the Operating System. The defaults are listed below:
+
+| Operating System | Cache Path                | Configuration Path             | Data Path               |
+|------------------|---------------------------|--------------------------------|-------------------------|
+| Linux            | $HOME/.cache/helm         | $HOME/.config/helm             | $HOME/.local/share/helm |
+| macOS            | $HOME/Library/Caches/helm | $HOME/Library/Preferences/helm | $HOME/Library/helm      |
+| Windows          | %TEMP%\helm               | %APPDATA%\helm                 | %APPDATA%\helm          |
+
+Usage:
+  helm [command]
+
+Available Commands:
+  completion  generate autocompletion scripts for the specified shell
+  create      create a new chart with the given name
+  dependency  manage a chart's dependencies
+  env         helm client environment information
+  get         download extended information of a named release
+  help        Help about any command
+  history     fetch release history
+  install     install a chart
+  lint        examine a chart for possible issues
+  list        list releases
+  package     package a chart directory into a chart archive
+  plugin      install, list, or uninstall Helm plugins
+  pull        download a chart from a repository and (optionally) unpack it in local directory
+  push        push a chart to remote
+  registry    login to or logout from a registry
+  repo        add, list, remove, update, and index chart repositories
+  rollback    roll back a release to a previous revision
+  search      search for a keyword in charts
+  show        show information of a chart
+  status      display the status of the named release
+  template    locally render templates
+  test        run tests for a release
+  uninstall   uninstall a release
+  upgrade     upgrade a release
+  verify      verify that a chart at the given path has been signed and is valid
+  version     print the client version information
+
+Flags:
+      --burst-limit int                 client-side default throttling limit (default 100)
+      --debug                           enable verbose output
+  -h, --help                            help for helm
+      --kube-apiserver string           the address and the port for the Kubernetes API server
+      --kube-as-group stringArray       group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+      --kube-as-user string             username to impersonate for the operation
+      --kube-ca-file string             the certificate authority file for the Kubernetes API server connection
+      --kube-context string             name of the kubeconfig context to use
+      --kube-insecure-skip-tls-verify   if true, the Kubernetes API server's certificate will not be checked for validity. This will make your HTTPS connections insecure
+      --kube-tls-server-name string     server name to use for Kubernetes API server certificate validation. If it is not provided, the hostname used to contact the server is used
+      --kube-token string               bearer token used for authentication
+      --kubeconfig string               path to the kubeconfig file
+  -n, --namespace string                namespace scope for this request
+      --registry-config string          path to the registry config file (default "/root/.config/helm/registry/config.json")
+      --repository-cache string         path to the file containing cached repository indexes (default "/root/.cache/helm/repository")
+      --repository-config string        path to the file containing repository names and URLs (default "/root/.config/helm/repositories.yaml")
+
+Use "helm [command] --help" for more information about a command.
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm upgrade tomcat --values=../values.yaml 
+Error: "helm upgrade" requires 2 arguments
+
+Usage:  helm upgrade [RELEASE] [CHART] [flags]
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm upgrade tomcat .  --values=../values.yaml 
+Error: UPGRADE FAILED: "tomcat" has no deployed releases
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm install tomcat .  --values=../values.yaml 
+NAME: tomcat
+LAST DEPLOYED: Thu Aug 17 10:51:24 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: tomcat
+CHART VERSION: 10.9.8
+APP VERSION: 10.1.12
+
+** Please be patient while the chart is being deployed **
+
+1. Get the Tomcat URL by running:
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc --namespace default -w tomcat'
+
+  export SERVICE_IP=$(kubectl get svc --namespace default tomcat --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+  echo "Tomcat URL:            http://$SERVICE_IP/"
+  echo "Tomcat Management URL: http://$SERVICE_IP/manager"
+
+2. Login with the following credentials
+
+  echo Username: user
+  echo Password: $(kubectl get secret --namespace default tomcat -o jsonpath="{.data.tomcat-password}" | base64 -d)
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# cd ..
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# vi values.yaml 
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# ls
+tomcat  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm# cd tomcat/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm upgrade tomcat .  --values=../values.yaml 
+Release "tomcat" has been upgraded. Happy Helming!
+NAME: tomcat
+LAST DEPLOYED: Thu Aug 17 10:53:10 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+NOTES:
+CHART NAME: tomcat
+CHART VERSION: 10.9.8
+APP VERSION: 10.1.12
+
+** Please be patient while the chart is being deployed **
+
+1. Get the Tomcat URL by running:
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc --namespace default -w tomcat'
+
+  export SERVICE_IP=$(kubectl get svc --namespace default tomcat --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+  echo "Tomcat URL:            http://$SERVICE_IP/"
+  echo "Tomcat Management URL: http://$SERVICE_IP/manager"
+
+2. Login with the following credentials
+
+  echo Username: user
+  echo Password: $(kubectl get secret --namespace default tomcat -o jsonpath="{.data.tomcat-password}" | base64 -d)
+
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm lint ./tomcat
+==> Linting ./tomcat
+Error unable to check Chart.yaml file in chart: stat tomcat/Chart.yaml: no such file or directory
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm template ./tomcat
+Error: path "./tomcat" not found
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm template . --values values.yaml
+---
+# Source: tomcat/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: release-name-tomcat
+  namespace: default
+  labels:
+    app.kubernetes.io/name: tomcat
+    helm.sh/chart: tomcat-10.9.8
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  tomcat-password: "d0lOS0pJNndlMw=="
+---
+# Source: tomcat/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: release-name-tomcat
+  namespace: default
+  labels:
+    app.kubernetes.io/name: tomcat
+    helm.sh/chart: tomcat-10.9.8
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "8Gi"
+---
+# Source: tomcat/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-tomcat
+  namespace: default
+  labels:
+    app.kubernetes.io/name: tomcat
+    helm.sh/chart: tomcat-10.9.8
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: "Cluster"
+  sessionAffinity: None
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector: 
+    app.kubernetes.io/name: tomcat
+    app.kubernetes.io/instance: release-name
+---
+# Source: tomcat/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-tomcat
+  namespace: default
+  labels:
+    app.kubernetes.io/name: tomcat
+    helm.sh/chart: tomcat-10.9.8
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tomcat
+      app.kubernetes.io/instance: release-name
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tomcat
+        helm.sh/chart: tomcat-10.9.8
+        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: tomcat
+                    app.kubernetes.io/instance: release-name
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+      containers:
+        - name: tomcat
+          image: docker.io/bitnami/tomcat:10.1.12-debian-11-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: TOMCAT_USERNAME
+              value: "user"
+            - name: TOMCAT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-tomcat
+                  key: tomcat-password
+            - name: TOMCAT_ALLOW_REMOTE_MANAGEMENT
+              value: "0"
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 6
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits: {}
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/tomcat
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: release-name-tomcat
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm ls --all
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+tomcat  default         2               2023-08-17 10:53:10.266074262 +0000 UTC deployed        tomcat-10.9.8   10.1.12    
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm rollback tomcat .  --values=../values.yaml 
+Error: unknown flag: --values
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm rollback tomcat .  values=../values.yaml
+Error: could not convert revision to a number: strconv.Atoi: parsing ".": invalid syntax
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm list
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+tomcat  default         2               2023-08-17 10:53:10.266074262 +0000 UTC deployed        tomcat-10.9.8   10.1.12    
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm list -all
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# ls
+Chart.lock  Chart.yaml  README.md  charts  templates  values.yaml
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# vi charts/
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm rollback -h
+
+This command rolls back a release to a previous revision.
+
+The first argument of the rollback command is the name of a release, and the
+second is a revision (version) number. If this argument is omitted, it will
+roll back to the previous release.
+
+To see revision numbers, run 'helm history RELEASE'.
+
+Usage:
+  helm rollback <RELEASE> [REVISION] [flags]
+
+Flags:
+      --cleanup-on-fail    allow deletion of new resources created in this rollback when rollback fails
+      --dry-run            simulate a rollback
+      --force              force resource update through delete/recreate if needed
+  -h, --help               help for rollback
+      --history-max int    limit the maximum number of revisions saved per release. Use 0 for no limit (default 10)
+      --no-hooks           prevent hooks from running during rollback
+      --recreate-pods      performs pods restart for the resource if applicable
+      --timeout duration   time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)
+      --wait               if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as --timeout
+      --wait-for-jobs      if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful. It will wait for as long as --timeout
+
+Global Flags:
+      --burst-limit int                 client-side default throttling limit (default 100)
+      --debug                           enable verbose output
+      --kube-apiserver string           the address and the port for the Kubernetes API server
+      --kube-as-group stringArray       group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+      --kube-as-user string             username to impersonate for the operation
+      --kube-ca-file string             the certificate authority file for the Kubernetes API server connection
+      --kube-context string             name of the kubeconfig context to use
+      --kube-insecure-skip-tls-verify   if true, the Kubernetes API server's certificate will not be checked for validity. This will make your HTTPS connections insecure
+      --kube-tls-server-name string     server name to use for Kubernetes API server certificate validation. If it is not provided, the hostname used to contact the server is used
+      --kube-token string               bearer token used for authentication
+      --kubeconfig string               path to the kubeconfig file
+  -n, --namespace string                namespace scope for this request
+      --registry-config string          path to the registry config file (default "/root/.config/helm/registry/config.json")
+      --repository-cache string         path to the file containing cached repository indexes (default "/root/.cache/helm/repository")
+      --repository-config string        path to the file containing repository names and URLs (default "/root/.config/helm/repositories.yaml")
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm list
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+tomcat  default         2               2023-08-17 10:53:10.266074262 +0000 UTC deployed        tomcat-10.9.8   10.1.12    
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# helm rollback tomcat 1 
+Rollback was a success! Happy Helming!
+root@ip-172-31-35-60:/usr/local/bin/kind-cluster/tomcat/helm/tomcat# 
+
+
+
+#installation 
+    1  apt update
+    2  apt install docker -y
+    3  docker --version
+    4  apt install docker.io
+    5  docker --version
+    6  service docker start
+    7  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+    8  chmod +x ./kind
+    9  mv ./kind /usr/local/bin/kind
+   10  cd /usr/local/bin/
+   11  echo $PATH
+   12  export PATH=$PATH:/usr/local/cdbin
+   13  kind --version
+   14  mkdir kind-cluster
+   15  cd kind-cluster
+   16  vi config.yaml
+   17  kind create cluster --config=config.yaml
+   18  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+   19  curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+   20  echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+   21  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+   22  chmod +x kubectl
+   23  mkdir -p ~/.local/bin
+   24  mv ./kubectl ~/.local/bin/kubectl
+   25  kubectl version --client
+   26  helm install
+   27  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+   28  chmod 700 get_helm.sh
+   29  ./get_helm.sh
+   30  helm version
+
+#Repo addition
+   31  helm repo add bitnami https://charts.bitnami.com/bitnami
+   32  helm search repo
+   33  mkdir tomcat
+
+#pull and unzip tomcat
+
+   34  helm pull tomcat
+   35  cd tomcat/
+   36  helm pull bitnami/tomcat --version 10.9.8
+   37  ls
+   38  tar -xvfz tomcat-10.9.8.tgz 
+   39  tar -xvf tomcat-10.9.8.tgz 
+   40  ls
+   41  cd ..
+   42  ls
+   43  cd tomcat/
+   44  ls
+   45  cd tomcat
+   46  ls
+   47  cat values.yaml 
+   48  clear
+   49  ls
+   50  cd ..
+   51  ls
+   52  cd ..
+   53  ls
+   54  cd tomcat/
+   55  ls
+   56  cd tomcat
+   57  ls
+   58  cp values.yaml tomcat
+   59  ls
+   60  cd ..
+   61  ls
+   62  cd ..
+   63  ls
+   64  cd tomcat/
+   65  ls
+   66  mv tomcat helm
+   67  ls
+   68  pwd
+   69  ls
+   70  cd helm
+   71  ls
+   72  cp values.yaml ../helm/
+   73  ls
+   74  pwd
+
+#file move to earlier directory from tomcat/helm/values.yaml to /tomcat
+
+   75  cp /usr/local/bin/kind-cluster/tomcat/helm /usr/local/bin/kind-cluster/tomcat/
+   76  cp /usr/local/bin/kind-cluster/tomcat/helm/values.yaml  /usr/local/bin/kind-cluster/tomcat/
+   77  ls
+   78  cd ..
+   79  ls
+   80  cd ..
+
+
+   81  helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+   82  cd tomcat/
+   83  ls
+   84  helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+   85  ls
+   86  cd helm/
+   87  ls
+   88  cd ,,
+   89  cd ..
+   90  ls
+   91  cd,..
+   92  cd ..
+   93  ls
+   94  cd tomcat
+   95  ls
+   96  rm -rf values.yaml 
+   97  ls
+   98  cd helm/
+   99  ls
+  100  cd ..
+  101  rm -rf helm/
+  102  ls
+  103  history
+  104  ls
+  105  mkdir helm
+  106  ls
+  107  cd helm/
+  108  tar -xvf ../tomcat-10.9.8.tgz
+  109  ls
+  110  cd tomcat/
+  111  ls
+  112  pwd
+  113  cp /usr/local/bin/kind-cluster/tomcat/helm/tomcat/values.yaml /usr/local/bin/kind-cluster/tomcat/helm/
+  114  ls
+  115  cd ..
+  116  ls
+  117  vi values.yaml 
+  118  cd ..
+  119  helm --upgrade install tomcat -n tomcat --values=./values.yaml ./helm
+  120  ls
+  121  cd helm
+  122  ls
+  123  cd tomcat/
+  124  ls
+  125  cd ..
+  126  ls
+  127  helm --upgrade install tomcat -n tomcat --values=./values.yaml ./tomcat
+  128  cd tomcat/
+  129  helm --upgrade install tomcat -n tomcat --values=../values.yaml 
+  130  helm --upgrade tomcat --values=../values.yaml 
+  131  helm --upgrade tomcat --values=../values.yaml -h
+  132  helm upgrade 
+  133  helm -h
+  134  helm upgrade tomcat --values=../values.yaml 
+  135  helm upgrade tomcat .  --values=../values.yaml 
+  136  helm install tomcat .  --values=../values.yaml 
+  137  cd ..
+  138  ls
+  139  vi values.yaml 
+  140  ls
+  141  cd tomcat/
+  142  helm upgrade tomcat .  --values=../values.yaml 
+  143  history
+  144  helm lint ./tomcat
+  145  helm template ./tomcat
+  146  helm template . --values values.yaml
+  147  helm ls --all
+  148  helm rollback tomcat .  --values=../values.yaml 
+  149  helm rollback tomcat .  values=../values.yaml
+  150  helm list
+  151  helm list -all
+  152  ls
+  153  vi charts/
+  154  helm rollback -h
+  155  helm list
+  156  helm rollback tomcat 1 
+  157  history
