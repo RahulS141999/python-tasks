@@ -1,0 +1,838 @@
+login as: ec2-user
+Authenticating with public key "vmkey"
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-172-31-34-91 ~]$ sudo su
+[root@ip-172-31-34-91 ec2-user]# yum update
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+No packages marked for update
+[root@ip-172-31-34-91 ec2-user]# yum install docker -y
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package docker.x86_64 0:20.10.17-1.amzn2.0.2 will be installed
+--> Processing Dependency: runc >= 1.0.0 for package: docker-20.10.17-1.amzn2.0.                                                                                        2.x86_64
+--> Processing Dependency: libcgroup >= 0.40.rc1-5.15 for package: docker-20.10.                                                                                        17-1.amzn2.0.2.x86_64
+--> Processing Dependency: containerd >= 1.3.2 for package: docker-20.10.17-1.am                                                                                        zn2.0.2.x86_64
+--> Processing Dependency: pigz for package: docker-20.10.17-1.amzn2.0.2.x86_64
+--> Running transaction check
+---> Package containerd.x86_64 0:1.6.8-1.amzn2.0.1 will be installed
+---> Package libcgroup.x86_64 0:0.41-21.amzn2 will be installed
+---> Package pigz.x86_64 0:2.3.4-1.amzn2.0.1 will be installed
+---> Package runc.x86_64 0:1.1.4-1.amzn2.0.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package        Arch       Version                  Repository             Size
+================================================================================
+Installing:
+ docker         x86_64     20.10.17-1.amzn2.0.2     amzn2extra-docker      39 M
+Installing for dependencies:
+ containerd     x86_64     1.6.8-1.amzn2.0.1        amzn2extra-docker      27 M
+ libcgroup      x86_64     0.41-21.amzn2            amzn2-core             66 k
+ pigz           x86_64     2.3.4-1.amzn2.0.1        amzn2-core             81 k
+ runc           x86_64     1.1.4-1.amzn2.0.1        amzn2extra-docker     2.9 M
+
+Transaction Summary
+================================================================================
+Install  1 Package (+4 Dependent packages)
+
+Total download size: 69 M
+Installed size: 260 M
+Downloading packages:
+(1/5): libcgroup-0.41-21.amzn2.x86_64.rpm                  |  66 kB   00:00
+(2/5): pigz-2.3.4-1.amzn2.0.1.x86_64.rpm                   |  81 kB   00:00
+(3/5): containerd-1.6.8-1.amzn2.0.1.x86_64.rpm             |  27 MB   00:00
+(4/5): docker-20.10.17-1.amzn2.0.2.x86_64.rpm              |  39 MB   00:01
+(5/5): runc-1.1.4-1.amzn2.0.1.x86_64.rpm                   | 2.9 MB   00:00
+--------------------------------------------------------------------------------
+Total                                               63 MB/s |  69 MB  00:01
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : runc-1.1.4-1.amzn2.0.1.x86_64                                1/5
+  Installing : containerd-1.6.8-1.amzn2.0.1.x86_64                          2/5
+  Installing : libcgroup-0.41-21.amzn2.x86_64                               3/5
+  Installing : pigz-2.3.4-1.amzn2.0.1.x86_64                                4/5
+  Installing : docker-20.10.17-1.amzn2.0.2.x86_64                           5/5
+  Verifying  : containerd-1.6.8-1.amzn2.0.1.x86_64                          1/5
+  Verifying  : pigz-2.3.4-1.amzn2.0.1.x86_64                                2/5
+  Verifying  : libcgroup-0.41-21.amzn2.x86_64                               3/5
+  Verifying  : docker-20.10.17-1.amzn2.0.2.x86_64                           4/5
+  Verifying  : runc-1.1.4-1.amzn2.0.1.x86_64                                5/5
+
+Installed:
+  docker.x86_64 0:20.10.17-1.amzn2.0.2
+
+Dependency Installed:
+  containerd.x86_64 0:1.6.8-1.amzn2.0.1     libcgroup.x86_64 0:0.41-21.amzn2
+  pigz.x86_64 0:2.3.4-1.amzn2.0.1           runc.x86_64 0:1.1.4-1.amzn2.0.1
+
+Complete!
+[root@ip-172-31-34-91 ec2-user]# service docker start
+Redirecting to /bin/systemctl start docker.service
+[root@ip-172-31-34-91 ec2-user]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@ip-172-31-34-91 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.                                                                                        17.0/kind-linux-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    97  100    97    0     0    184      0 --:--:-- --:--:-- --:--:--   184
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100 6766k  100 6766k    0     0   364k      0  0:00:18  0:00:18 --:--:--  569k
+[root@ip-172-31-34-91 ec2-user]# chmod +x ./kind
+[root@ip-172-31-34-91 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-34-91 ec2-user]# ls
+[root@ip-172-31-34-91 ec2-user]# ls -al
+total 12
+drwx------ 3 ec2-user ec2-user  74 Feb 20 09:59 .
+drwxr-xr-x 3 root     root      22 Feb 20 09:52 ..
+-rw-r--r-- 1 ec2-user ec2-user  18 Jul 15  2020 .bash_logout
+-rw-r--r-- 1 ec2-user ec2-user 193 Jul 15  2020 .bash_profile
+-rw-r--r-- 1 ec2-user ec2-user 231 Jul 15  2020 .bashrc
+drwx------ 2 ec2-user ec2-user  29 Feb 20 09:52 .ssh
+[root@ip-172-31-34-91 ec2-user]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@ip-172-31-34-91 ec2-user]# kind version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.16.0/kind-linu                                                                          x-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    97  100    97    0     0    139      0 --:--:-- --:--:-- --:--:--   139
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100 6712k  100 6712k    0     0  1202k      0  0:00:05  0:00:05 --:--:-- 2169k
+[root@ip-172-31-34-91 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-34-91 ec2-user]# chmod +x ./kind
+chmod: cannot access ‘./kind’: No such file or directory
+[root@ip-172-31-34-91 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linu                                                                          x-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    97  100    97    0     0    222      0 --:--:-- --:--:-- --:--:--   222
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0   946k      0  0:00:07  0:00:07 --:--:-- 1506k
+[root@ip-172-31-34-91 ec2-user]# chmod +x ./kind
+[root@ip-172-31-34-91 ec2-user]# sudo mv ./kind /usr/local/bin/kind                                                                                                     [root@ip-172-31-34-91 ec2-user]#
+[root@ip-172-31-34-91 ec2-user]# kind -v
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# kind -version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# Kind -v
+bash: Kind: command not found
+[root@ip-172-31-34-91 ec2-user]# yum update
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                             | 3.7 kB  00:00:00
+No packages marked for update
+[root@ip-172-31-34-91 ec2-user]# yum upgrade
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+No packages marked for update
+[root@ip-172-31-34-91 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linu                                                                          x-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    97  100    97    0     0    199      0 --:--:-- --:--:-- --:--:--   199
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0  3784k      0  0:00:01  0:00:01 --:--:-- 26.0M
+[root@ip-172-31-34-91 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# ls
+kind
+[root@ip-172-31-34-91 ec2-user]# cd kind
+bash: cd: kind: Not a directory
+[root@ip-172-31-34-91 ec2-user]# ./kind
+bash: ./kind: Permission denied
+[root@ip-172-31-34-91 ec2-user]# ls -lrt
+total 6768
+-rw-r--r-- 1 root root 6929103 Feb 20 10:05 kind
+[root@ip-172-31-34-91 ec2-user]# chmod +x ./kind
+[root@ip-172-31-34-91 ec2-user]# ls
+kind
+[root@ip-172-31-34-91 ec2-user]# ls -lrt
+total 6768
+-rwxr-xr-x 1 root root 6929103 Feb 20 10:05 kind
+[root@ip-172-31-34-91 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-34-91 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-34-91 ec2-user]# mv ./kind /usr/local/bin/kind
+mv: cannot stat ‘./kind’: No such file or directory
+[root@ip-172-31-34-91 ec2-user]# cd /usr/local/bin/
+[root@ip-172-31-34-91 bin]# ls -lrt
+total 6768
+-rwxr-xr-x 1 root root 6929103 Feb 20 10:05 kind
+[root@ip-172-31-34-91 bin]# echo $PATH
+/sbin:/bin:/usr/sbin:/usr/bin
+[root@ip-172-31-34-91 bin]# export PATH=$PATH:/usr/local/bin
+[root@ip-172-31-34-91 bin]# cd ../../../
+[root@ip-172-31-34-91 /]# ls
+bin  boot  dev  etc  home  lib  lib64  local  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@ip-172-31-34-91 /]# kind --version
+kind version 0.17.0
+[root@ip-172-31-34-91 /]# ls
+bin  boot  dev  etc  home  lib  lib64  local  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@ip-172-31-34-91 /]# cd home
+[root@ip-172-31-34-91 home]# ls
+ec2-user
+[root@ip-172-31-34-91 home]# cd ec2-user
+[root@ip-172-31-34-91 ec2-user]# ls
+[root@ip-172-31-34-91 ec2-user]# kind --version
+kind version 0.17.0
+[root@ip-172-31-34-91 ec2-user]# ls
+[root@ip-172-31-34-91 ec2-user]# mkdir kind-cluster
+[root@ip-172-31-34-91 ec2-user]# cd kind-cluster/
+[root@ip-172-31-34-91 kind-cluster]# ls
+[root@ip-172-31-34-91 kind-cluster]# vi config.yml
+[root@ip-172-31-34-91 kind-cluster]# kind create cluster --config=config.yml
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.3) 🖼
+ ✓ Preparing nodes 📦 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+ ✓ Joining worker nodes 🚜
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
+[root@ip-172-31-34-91 kind-cluster]# kubectl get nodes
+bash: kubectl: command not found
+[root@ip-172-31-34-91 kind-cluster]# kubectl cluster-info
+bash: kubectl: command not found
+[root@ip-172-31-34-91 kind-cluster]# kubectl get nodes
+bash: kubectl: command not found
+[root@ip-172-31-34-91 kind-cluster]# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    280      0 --:--:-- --:--:-- --:--:--   280
+100 45.7M  100 45.7M    0     0  31.2M      0  0:00:01  0:00:01 --:--:-- 59.7M
+[root@ip-172-31-34-91 kind-cluster]# curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    278      0 --:--:-- --:--:-- --:--:--   278
+100    64  100    64    0     0     82      0 --:--:-- --:--:-- --:--:--    82
+[root@ip-172-31-34-91 kind-cluster]# echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+kubectl: OK
+[root@ip-172-31-34-91 kind-cluster]# kubectl cluster-info --context kind-kind
+bash: kubectl: command not found
+[root@ip-172-31-34-91 kind-cluster]# kubectl get nodes
+bash: kubectl: command not found
+[root@ip-172-31-34-91 kind-cluster]# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+[root@ip-172-31-34-91 kind-cluster]# chmod +x kubectl
+[root@ip-172-31-34-91 kind-cluster]# mkdir -p ~/.local/bin
+[root@ip-172-31-34-91 kind-cluster]# mv ./kubectl ~/.local/bin/kubectl
+[root@ip-172-31-34-91 kind-cluster]# kubectl version --client
+WARNING: This version information is deprecated and will be replaced with the output from kubectl version --short.  Use --output=yaml|json to get the full version.
+Client Version: version.Info{Major:"1", Minor:"26", GitVersion:"v1.26.1", GitCommit:"8f94681cd294aa8cfd3407b8191f6c70214973a4", GitTreeState:"clean", BuildDate:"2023-01-18T15:58:16Z", GoVersion:"go1.19.5", Compiler:"gc", Platform:"linux/amd64"}
+Kustomize Version: v4.5.7
+[root@ip-172-31-34-91 kind-cluster]# kubectl cluster-info --context kind-kind
+Kubernetes control plane is running at https://127.0.0.1:34453
+CoreDNS is running at https://127.0.0.1:34453/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+[root@ip-172-31-34-91 kind-cluster]# kubectl get nodes
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   13m   v1.25.3
+kind-worker          Ready    <none>          12m   v1.25.3
+[root@ip-172-31-34-91 kind-cluster]# kind create cluster --config=confls
+ERROR: failed to create cluster: error reading file: open confls: no such file or directory
+[root@ip-172-31-34-91 kind-cluster]# ls
+config.yml  kubectl.sha256
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+No resources found in default namespace.
+[root@ip-172-31-34-91 kind-cluster]# kubectl get namespaces
+NAME                 STATUS   AGE
+default              Active   25m
+kube-node-lease      Active   25m
+kube-public          Active   25m
+kube-system          Active   25m
+local-path-storage   Active   25m
+[root@ip-172-31-34-91 kind-cluster]# docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                       NAMES
+1007f87108f8   kindest/node:v1.25.3   "/usr/local/bin/entr…"   26 minutes ago   Up 26 minutes   127.0.0.1:34453->6443/tcp   kind-control-plane
+4b2fd8572f83   kindest/node:v1.25.3   "/usr/local/bin/entr…"   26 minutes ago   Up 26 minutes                               kind-worker
+[root@ip-172-31-34-91 kind-cluster]# docker exec -it 1007f87108f8 sh
+#
+# ls /etc/kubernetes
+admin.conf  controller-manager.conf  kubelet.conf  manifests  pki  scheduler.conf
+#
+# exit
+[root@ip-172-31-34-91 kind-cluster]# kubectl create deployment nginx-deployment --image=nginx --replicas=2
+deployment.apps/nginx-deployment created
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+NAME                                READY   STATUS              RESTARTS   AGE
+nginx-deployment-5fbdf85c67-fjpgw   0/1     ContainerCreating   0          8s
+nginx-deployment-5fbdf85c67-xbl7g   0/1     ContainerCreating   0          8s
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+NAME                                READY   STATUS              RESTARTS   AGE
+nginx-deployment-5fbdf85c67-fjpgw   0/1     ContainerCreating   0          29s
+nginx-deployment-5fbdf85c67-xbl7g   1/1     Running             0          30s
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-5fbdf85c67-fjpgw   1/1     Running   0          39s
+nginx-deployment-5fbdf85c67-xbl7g   1/1     Running   0          39s
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-5fbdf85c67-fjpgw   1/1     Running   0          6m31s
+nginx-deployment-5fbdf85c67-xbl7g   1/1     Running   0          6m31s
+[root@ip-172-31-34-91 kind-cluster]# kubectl expose deployment nginx-deployment --type=NodePort --name=nginx-service --port 80
+service/nginx-service exposed
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-5fbdf85c67-fjpgw   1/1     Running   0          18m
+nginx-deployment-5fbdf85c67-xbl7g   1/1     Running   0          18m
+[root@ip-172-31-34-91 kind-cluster]# kubectl get svc
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        48m
+nginx-service   NodePort    10.96.167.109   <none>        80:32443/TCP   30s
+[root@ip-172-31-34-91 kind-cluster]# kubectl get pods -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+nginx-deployment-5fbdf85c67-fjpgw   1/1     Running   0          19m   10.244.1.2   kind-worker   <none>           <none>
+nginx-deployment-5fbdf85c67-xbl7g   1/1     Running   0          19m   10.244.1.3   kind-worker   <none>           <none>
+[root@ip-172-31-34-91 kind-cluster]# ^C
+[root@ip-172-31-34-91 kind-cluster]# kubectl describe svc nginx-service
+Name:                     nginx-service
+Namespace:                default
+Labels:                   app=nginx-deployment
+Annotations:              <none>
+Selector:                 app=nginx-deployment
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.96.167.109
+IPs:                      10.96.167.109
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  32443/TCP
+Endpoints:                10.244.1.2:80,10.244.1.3:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+***********************************************************************************************************************************
+*******************************************************************
+
+
+
+login as: ec2-user
+Authenticating with public key "kube-key"
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+No packages needed for security; 3 packages available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-172-31-13-18 ~]$ sudo su
+[root@ip-172-31-13-18 ec2-user]# yum update
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package ec2-hibinit-agent.noarch 0:1.0.2-3.amzn2 will be updated
+---> Package ec2-hibinit-agent.noarch 0:1.0.2-4.amzn2 will be an update
+---> Package rsyslog.x86_64 0:8.24.0-57.amzn2.2.0.1 will be updated
+---> Package rsyslog.x86_64 0:8.24.0-57.amzn2.2.0.2 will be an update
+---> Package tzdata.noarch 0:2022f-1.amzn2.0.1 will be updated
+---> Package tzdata.noarch 0:2022g-1.amzn2.0.2 will be an update
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package              Arch      Version                     Repository     Size
+================================================================================
+Updating:
+ ec2-hibinit-agent    noarch    1.0.2-4.amzn2               amzn2-core     14 k
+ rsyslog              x86_64    8.24.0-57.amzn2.2.0.2       amzn2-core    619 k
+ tzdata               noarch    2022g-1.amzn2.0.2           amzn2-core    480 k
+
+Transaction Summary
+================================================================================
+Upgrade  3 Packages
+
+Total download size: 1.1 M
+Is this ok [y/d/N]:  yum install docker -y
+Is this ok [y/d/N]: y
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/3): ec2-hibinit-agent-1.0.2-4.amzn2.noarch.rpm          |  14 kB   00:00
+(2/3): tzdata-2022g-1.amzn2.0.2.noarch.rpm                 | 480 kB   00:00
+(3/3): rsyslog-8.24.0-57.amzn2.2.0.2.x86_64.rpm            | 619 kB   00:00
+--------------------------------------------------------------------------------
+Total                                              2.3 MB/s | 1.1 MB  00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Updating   : rsyslog-8.24.0-57.amzn2.2.0.2.x86_64                         1/6
+  Updating   : ec2-hibinit-agent-1.0.2-4.amzn2.noarch                       2/6
+  Updating   : tzdata-2022g-1.amzn2.0.2.noarch                              3/6
+  Cleanup    : ec2-hibinit-agent-1.0.2-3.amzn2.noarch                       4/6
+  Cleanup    : tzdata-2022f-1.amzn2.0.1.noarch                              5/6
+  Cleanup    : rsyslog-8.24.0-57.amzn2.2.0.1.x86_64                         6/6
+  Verifying  : tzdata-2022g-1.amzn2.0.2.noarch                              1/6
+  Verifying  : ec2-hibinit-agent-1.0.2-4.amzn2.noarch                       2/6
+  Verifying  : rsyslog-8.24.0-57.amzn2.2.0.2.x86_64                         3/6
+  Verifying  : tzdata-2022f-1.amzn2.0.1.noarch                              4/6
+  Verifying  : ec2-hibinit-agent-1.0.2-3.amzn2.noarch                       5/6
+  Verifying  : rsyslog-8.24.0-57.amzn2.2.0.1.x86_64                         6/6
+
+Updated:
+  ec2-hibinit-agent.noarch 0:1.0.2-4.amzn2
+  rsyslog.x86_64 0:8.24.0-57.amzn2.2.0.2
+  tzdata.noarch 0:2022g-1.amzn2.0.2
+
+Complete!
+[root@ip-172-31-13-18 ec2-user]# docker --version
+bash: docker: command not found
+[root@ip-172-31-13-18 ec2-user]# yum install docker -y
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package docker.x86_64 0:20.10.17-1.amzn2.0.2 will be installed
+--> Processing Dependency: runc >= 1.0.0 for package: docker-20.10.17-1.amzn2.0.                                                                                        2.x86_64
+--> Processing Dependency: libcgroup >= 0.40.rc1-5.15 for package: docker-20.10.                                                                                        17-1.amzn2.0.2.x86_64
+--> Processing Dependency: containerd >= 1.3.2 for package: docker-20.10.17-1.am                                                                                        zn2.0.2.x86_64
+--> Processing Dependency: pigz for package: docker-20.10.17-1.amzn2.0.2.x86_64
+--> Running transaction check
+---> Package containerd.x86_64 0:1.6.8-1.amzn2.0.1 will be installed
+---> Package libcgroup.x86_64 0:0.41-21.amzn2 will be installed
+---> Package pigz.x86_64 0:2.3.4-1.amzn2.0.1 will be installed
+---> Package runc.x86_64 0:1.1.4-1.amzn2.0.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package        Arch       Version                  Repository             Size
+================================================================================
+Installing:
+ docker         x86_64     20.10.17-1.amzn2.0.2     amzn2extra-docker      39 M
+Installing for dependencies:
+ containerd     x86_64     1.6.8-1.amzn2.0.1        amzn2extra-docker      27 M
+ libcgroup      x86_64     0.41-21.amzn2            amzn2-core             66 k
+ pigz           x86_64     2.3.4-1.amzn2.0.1        amzn2-core             81 k
+ runc           x86_64     1.1.4-1.amzn2.0.1        amzn2extra-docker     2.9 M
+
+Transaction Summary
+================================================================================
+Install  1 Package (+4 Dependent packages)
+
+Total download size: 69 M
+Installed size: 260 M
+Downloading packages:
+(1/5): libcgroup-0.41-21.amzn2.x86_64.rpm                  |  66 kB   00:00
+(2/5): pigz-2.3.4-1.amzn2.0.1.x86_64.rpm                   |  81 kB   00:00
+(3/5): containerd-1.6.8-1.amzn2.0.1.x86_64.rpm             |  27 MB   00:00
+(4/5): runc-1.1.4-1.amzn2.0.1.x86_64.rpm                   | 2.9 MB   00:00
+(5/5): docker-20.10.17-1.amzn2.0.2.x86_64.rpm              |  39 MB   00:01
+--------------------------------------------------------------------------------
+Total                                               67 MB/s |  69 MB  00:01
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : runc-1.1.4-1.amzn2.0.1.x86_64                                1/5
+  Installing : containerd-1.6.8-1.amzn2.0.1.x86_64                          2/5
+  Installing : libcgroup-0.41-21.amzn2.x86_64                               3/5
+  Installing : pigz-2.3.4-1.amzn2.0.1.x86_64                                4/5
+  Installing : docker-20.10.17-1.amzn2.0.2.x86_64                           5/5
+  Verifying  : containerd-1.6.8-1.amzn2.0.1.x86_64                          1/5
+  Verifying  : pigz-2.3.4-1.amzn2.0.1.x86_64                                2/5
+  Verifying  : libcgroup-0.41-21.amzn2.x86_64                               3/5
+  Verifying  : docker-20.10.17-1.amzn2.0.2.x86_64                           4/5
+  Verifying  : runc-1.1.4-1.amzn2.0.1.x86_64                                5/5
+
+Installed:
+  docker.x86_64 0:20.10.17-1.amzn2.0.2
+
+Dependency Installed:
+  containerd.x86_64 0:1.6.8-1.amzn2.0.1     libcgroup.x86_64 0:0.41-21.amzn2
+  pigz.x86_64 0:2.3.4-1.amzn2.0.1           runc.x86_64 0:1.1.4-1.amzn2.0.1
+
+Complete!
+[root@ip-172-31-13-18 ec2-user]# docker --version
+Docker version 20.10.17, build 100c701
+[root@ip-172-31-13-18 ec2-user]# service docker start
+Redirecting to /bin/systemctl start docker.service
+[root@ip-172-31-13-18 ec2-user]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@ip-172-31-13-18 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    76  100    76    0     0     74      0  0:00:01  0:00:01 --:--:--    74
+100     9    0     9    0     0      5      0 --:--:--  0:00:01 --:--:--    27
+[root@ip-172-31-13-18 ec2-user]# chmod +x ./kind
+[root@ip-172-31-13-18 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-13-18 ec2-user]# ls -al
+total 12
+drwx------ 3 ec2-user ec2-user  74 Feb 22 05:02 .
+drwxr-xr-x 3 root     root      22 Feb 22 04:57 ..
+-rw-r--r-- 1 ec2-user ec2-user  18 Jul 15  2020 .bash_logout
+-rw-r--r-- 1 ec2-user ec2-user 193 Jul 15  2020 .bash_profile
+-rw-r--r-- 1 ec2-user ec2-user 231 Jul 15  2020 .bashrc
+drwx------ 2 ec2-user ec2-user  29 Feb 22 04:57 .ssh
+[root@ip-172-31-13-18 ec2-user]# kind --version
+bash: kind: command not found
+[root@ip-172-31-13-18 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.                                                                                        17.0/kind-linux-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    98  100    98    0     0    217      0 --:--:-- --:--:-- --:--:--   217
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0  1505k      0  0:00:04  0:00:04 --:--:-- 2257k
+[root@ip-172-31-13-18 ec2-user]# chmod +x ./kind
+[root@ip-172-31-13-18 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-13-18 ec2-user]# ^C
+[root@ip-172-31-13-18 ec2-user]# chmod +x ./kind
+chmod: cannot access ‘./kind’: No such file or directory
+[root@ip-172-31-13-18 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.                                                                                        17.0/kind-linux-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    98  100    98    0     0    228      0 --:--:-- --:--:-- --:--:--   228
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0  5611k      0  0:00:01  0:00:01 --:--:-- 19.5M
+[root@ip-172-31-13-18 ec2-user]# chmod +x ./kind
+[root@ip-172-31-13-18 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-13-18 ec2-user]# ls
+[root@ip-172-31-13-18 ec2-user]# curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.                                                                                        17.0/kind-linux-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    98  100    98    0     0    222      0 --:--:-- --:--:-- --:--:--   223
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 6766k  100 6766k    0     0  5059k      0  0:00:01  0:00:01 --:--:-- 5059k
+[root@ip-172-31-13-18 ec2-user]# ls
+kind
+[root@ip-172-31-13-18 ec2-user]# ./kind
+bash: ./kind: Permission denied
+[root@ip-172-31-13-18 ec2-user]# chmod +x ./kind
+[root@ip-172-31-13-18 ec2-user]# ls
+kind
+[root@ip-172-31-13-18 ec2-user]# ls -lrt
+total 6768
+-rwxr-xr-x 1 root root 6929103 Feb 22 05:04 kind
+[root@ip-172-31-13-18 ec2-user]# sudo mv ./kind /usr/local/bin/kind
+[root@ip-172-31-13-18 ec2-user]# mv ./kind /usr/local/bin/kind
+mv: cannot stat ‘./kind’: No such file or directory
+[root@ip-172-31-13-18 ec2-user]# cd /usr/local/bin/
+[root@ip-172-31-13-18 bin]# echo $PATH
+/sbin:/bin:/usr/sbin:/usr/bin
+[root@ip-172-31-13-18 bin]# export PATH=$PATH:/usr/local/bin
+[root@ip-172-31-13-18 bin]# cd ../../../
+[root@ip-172-31-13-18 /]# kind --version
+kind version 0.17.0
+[root@ip-172-31-13-18 /]# cd home/ec2-user
+[root@ip-172-31-13-18 ec2-user]# mkdir kind-cluster
+[root@ip-172-31-13-18 ec2-user]# cd kind-cluster/
+[root@ip-172-31-13-18 kind-cluster]# vi config.yml
+[root@ip-172-31-13-18 kind-cluster]# kind create cluster --config=config.yml
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.3) 🖼
+ ✓ Preparing nodes 📦 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+ ✓ Joining worker nodes 🚜
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
+[root@ip-172-31-13-18 kind-cluster]# curl -LO "https://dl.k8s.io/release/$(curl                                                                                         -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    277      0 --:--:-- --:--:-- --:--:--   277
+100 45.7M  100 45.7M    0     0  26.2M      0  0:00:01  0:00:01 --:--:-- 47.0M
+[root@ip-172-31-13-18 kind-cluster]# "https://dl.k8s.io/$(curl -L -s https://dl.                                                                                        k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+bash: https://dl.k8s.io/v1.26.1/bin/linux/amd64/kubectl.sha256: No such file or                                                                                         directory
+[root@ip-172-31-13-18 kind-cluster]# echo "$(cat kubectl.sha256)  kubectl" | sha                                                                                        256sum --check
+cat: kubectl.sha256: No such file or directory
+sha256sum: standard input: no properly formatted SHA256 checksum lines found
+[root@ip-172-31-13-18 kind-cluster]# echo "$(cat kubectl.sha256)  kubectl" | sha                                                                                        256sum --check
+cat: kubectl.sha256: No such file or directory
+sha256sum: standard input: no properly formatted SHA256 checksum lines found
+[root@ip-172-31-13-18 kind-cluster]# curl -LO "https://dl.k8s.io/release/$(curl                                                                                         -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    275      0 --:--:-- --:--:-- --:--:--   276
+100 45.7M  100 45.7M    0     0  31.6M      0  0:00:01  0:00:01 --:--:-- 61.8M
+[root@ip-172-31-13-18 kind-cluster]# curl -LO "https://dl.k8s.io/$(curl -L -s ht                                                                                        tps://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100   138    0     0    280      0 --:--:-- --:--:-- --:--:--   281
+100    64  100    64    0     0     82      0 --:--:-- --:--:-- --:--:--    82
+[root@ip-172-31-13-18 kind-cluster]# echo "$(cat kubectl.sha256)  kubectl" | sha                                                                                        256sum --check
+kubectl: OK
+[root@ip-172-31-13-18 kind-cluster]# sudo install -o root -g root -m 0755 kubect                                                                                        l /usr/local/bin/kubectl
+[root@ip-172-31-13-18 kind-cluster]# chmod +x kubectl
+[root@ip-172-31-13-18 kind-cluster]# mkdir -p ~/.local/bin
+[root@ip-172-31-13-18 kind-cluster]# mv ./kubectl ~/.local/bin/kubectl
+[root@ip-172-31-13-18 kind-cluster]# kubectl version --client
+WARNING: This version information is deprecated and will be replaced with the ou                                                                                        tput from kubectl version --short.  Use --output=yaml|json to get the full versi                                                                                        on.
+Client Version: version.Info{Major:"1", Minor:"26", GitVersion:"v1.26.1", GitCom                                                                                        mit:"8f94681cd294aa8cfd3407b8191f6c70214973a4", GitTreeState:"clean", BuildDate:                                                                                        "2023-01-18T15:58:16Z", GoVersion:"go1.19.5", Compiler:"gc", Platform:"linux/amd                                                                                        64"}
+Kustomize Version: v4.5.7
+[root@ip-172-31-13-18 kind-cluster]# kubectl cluster-info --context kind-kind
+Kubernetes control plane is running at https://127.0.0.1:41821
+CoreDNS is running at https://127.0.0.1:41821/api/v1/namespaces/kube-system/serv                                                                                        ices/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+[root@ip-172-31-13-18 kind-cluster]# kubectl get nodes
+NAME                 STATUS   ROLES           AGE     VERSION
+kind-control-plane   Ready    control-plane   7m32s   v1.25.3
+kind-worker          Ready    <none>          6m57s   v1.25.3
+[root@ip-172-31-13-18 kind-cluster]# kubectl get ns
+NAME                 STATUS   AGE
+default              Active   8m1s
+kube-node-lease      Active   8m2s
+kube-public          Active   8m2s
+kube-system          Active   8m2s
+local-path-storage   Active   7m55s
+[root@ip-172-31-13-18 kind-cluster]# docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED         S                                                                                        TATUS         PORTS                       NAMES
+1297a092f435   kindest/node:v1.25.3   "/usr/local/bin/entr…"   8 minutes ago   U                                                                                        p 8 minutes   127.0.0.1:41821->6443/tcp   kind-control-plane
+b62f0b9fa1c4   kindest/node:v1.25.3   "/usr/local/bin/entr…"   8 minutes ago   U                                                                                        p 8 minutes                               kind-worker
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+No resources found in default namespace.
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+pod/pod1 created
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME   READY   STATUS              RESTARTS   AGE
+pod1   0/2     ContainerCreating   0          6s
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME   READY   STATUS              RESTARTS   AGE
+pod1   0/2     ContainerCreating   0          16s
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME   READY   STATUS   RESTARTS      AGE
+pod1   1/2     Error    2 (25s ago)   52s
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods -o wide
+NAME   READY   STATUS             RESTARTS      AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+pod1   1/2     CrashLoopBackOff   2 (23s ago)   68s   10.244.1.2   kind-worker   <none>           <none>
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl delete -f pod1.yml
+pod "pod1" deleted
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+pod/pod1 created
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME   READY   STATUS    RESTARTS   AGE
+pod1   1/1     Running   0          12s
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods -o wide
+NAME   READY   STATUS    RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
+pod1   1/1     Running   0          7m48s   10.244.1.3   kind-worker   <none>           <none>
+[root@ip-172-31-13-18 kind-cluster]# kubectl exec pod1 -it -c c0 -- bin/bash
+root@pod1:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  product_name  product_uuid  root  run  sbin  srv  sys  tmp  usr  var
+root@pod1:/# pwd
+/
+root@pod1:/# exit
+exit
+[root@ip-172-31-13-18 kind-cluster]# kubectl describe pod1
+error: the server doesn't have a resource type "pod1"
+[root@ip-172-31-13-18 kind-cluster]# kubectl describe pods pod1
+Name:             pod1
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             kind-worker/172.18.0.2
+Start Time:       Wed, 22 Feb 2023 05:46:38 +0000
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.3
+IPs:
+  IP:  10.244.1.3
+Containers:
+  c0:
+    Container ID:  containerd://6209fe7c66ef5f82fce9580600bdc7fc22715187ac922b4481bd4606f926634b
+    Image:         ubuntu
+    Image ID:      docker.io/library/ubuntu@sha256:9a0bdde4188b896a372804be2384015e90e3f84906b750c1a53539b585fbbe7f
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/bash
+      -c
+      while true; do echo hello-world; sleep 5 ; done
+    State:          Running
+      Started:      Wed, 22 Feb 2023 05:46:42 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5jzg4 (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  kube-api-access-5jzg4:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  16m   default-scheduler  Successfully assigned default/pod1 to kind-worker
+  Normal  Pulling    16m   kubelet            Pulling image "ubuntu"
+  Normal  Pulled     16m   kubelet            Successfully pulled image "ubuntu" in 1.798508866s
+  Normal  Created    16m   kubelet            Created container c0
+  Normal  Started    16m   kubelet            Started container c0
+[root@ip-172-31-13-18 kind-cluster]# kubectl scale --replicas=2 pod pod1
+Error from server (NotFound): the server could not find the requested resource
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME   READY   STATUS    RESTARTS   AGE
+pod1   1/1     Running   0          25m
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pod pod1
+NAME   READY   STATUS    RESTARTS   AGE
+pod1   1/1     Running   0          25m
+[root@ip-172-31-13-18 kind-cluster]# kubectl scale --replicas=2 pod pod1
+Error from server (NotFound): the server could not find the requested resource
+[root@ip-172-31-13-18 kind-cluster]# vi pod1
+[root@ip-172-31-13-18 kind-cluster]# ls
+config.yml  kubectl.sha256  pod1  pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f myappdeploy1.yaml
+error: the path "myappdeploy1.yaml" does not exist
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yaml
+error: the path "pod1.yaml" does not exist
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+error: error parsing pod1.yml: error converting YAML to JSON: yaml: line 7: mapping values are not allowed in this context
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+error: error parsing pod1.yml: error converting YAML to JSON: yaml: line 7: mapping values are not allowed in this context
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+deployment.apps/mydeployments created
+[root@ip-172-31-13-18 kind-cluster]# kubectl describe deployment pod1.yml
+Error from server (NotFound): deployments.apps "pod1.yml" not found
+[root@ip-172-31-13-18 kind-cluster]# kubectl describe deployment pod1
+Error from server (NotFound): deployments.apps "pod1" not found
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl describe deployment mydeployments
+Name:                   mydeployments
+Namespace:              default
+CreationTimestamp:      Wed, 22 Feb 2023 06:25:37 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               name=deployment
+Replicas:               3 desired | 3 updated | 3 total | 0 available | 3 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  name=deployment
+  Containers:
+   c1:
+    Image:        ubuntu
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      False   MinimumReplicasUnavailable
+  Progressing    True    ReplicaSetUpdated
+OldReplicaSets:  <none>
+NewReplicaSet:   mydeployments-f49f97ddb (3/3 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  93s   deployment-controller  Scaled up replica set mydeployments-f49f97ddb to 3
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME                            READY   STATUS             RESTARTS      AGE
+mydeployments-f49f97ddb-fb99d   0/1     Completed          4 (47s ago)   2m4s
+mydeployments-f49f97ddb-hqz4x   0/1     CrashLoopBackOff   3 (33s ago)   2m4s
+mydeployments-f49f97ddb-ssqrk   0/1     CrashLoopBackOff   3 (34s ago)   2m4s
+pod1                            1/1     Running            0             41m
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl apply -f pod1.yml
+deployment.apps/mydeployments configured
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME                            READY   STATUS             RESTARTS      AGE
+mydeployments-f49f97ddb-fb99d   0/1     CrashLoopBackOff   5 (29s ago)   4m22s
+mydeployments-f49f97ddb-hqz4x   0/1     CrashLoopBackOff   5 (22s ago)   4m22s
+mydeployments-f49f97ddb-ssqrk   0/1     CrashLoopBackOff   5 (20s ago)   4m22s
+pod1                            1/1     Running            0             43m
+[root@ip-172-31-13-18 kind-cluster]# vi pod1.yml
+[root@ip-172-31-13-18 kind-cluster]# kubectl log pod1.yml
+error: unknown command "log" for "kubectl"
+
+Did you mean this?
+        top
+        logs
+[root@ip-172-31-13-18 kind-cluster]# kubectl logs pod1.yml
+Error from server (NotFound): pods "pod1.yml" not found
+[root@ip-172-31-13-18 kind-cluster]# kubectl logs pod1 --sinec 10m
+error: unknown flag: --sinec
+See 'kubectl logs --help' for usage.
+[root@ip-172-31-13-18 kind-cluster]# kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+mydeployments-74479fc89b-577kr   1/1     Running   0          40m
+mydeployments-74479fc89b-5lnfw   1/1     Running   0          40m
+mydeployments-74479fc89b-lhlrd   1/1     Running   0          40m
+pod1                             1/1     Running   0          85m
+[root@ip-172-31-13-18 kind-cluster]# kubectl logs mydeployments-74479fc89b-577kr --since 10m
+
+
+yum install docker -y
+service docker start
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /usr/local/bin/kind
+cd /usr/local/bin/
+echo $PATH
+export PATH=$PATH:/usr/local/cdbin
+kind --version
+
+mkdir kind-cluster
+cd kind-cluster
+vi config.yaml
+
+kind create cluster --config=config.yaml
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+kubectl version --client
+
+
+helm install
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+kubeadm join 192.168.0.18:6443 --token mw67cl.tzqqx6ay6ty1rpmp \
+    --discovery-token-ca-cert-hash sha256:8add27fe0c856a3c93193f63c84525a105e359605ba4dd1151f71e1ca8b89307
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+**************************************************************************************************************************
+****************************************************************************************************************************
