@@ -1,0 +1,85 @@
+aiohttp
+fastapi
+asyncio
+pytest
+autopep8
+urllib3
+requests
+python-gitlab
+dotenv
+
+
+
+'''import logging
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+logging.basicConfig(filename='production.log', level=logging.INFO,
+                    format='%(asctime)s -  %(levelname)s - %(message)s')
+
+app.route('/')
+
+
+def hello():
+    try:
+        name = "yash"
+        logging.info(f"Hello, {name} , requeset to / endpoint recived")
+        return f"Hello, {name}"
+    except Exception as e:
+        logging.error(f"Error occured: {str(e)}", exc_info=True)
+        return jsonify({"error": "internal server error is there "}), 500
+
+
+app.route('/about')
+
+
+def about():
+    try:
+        logging.info("reauest to /about endpoing recieved")
+        return "This is about page"
+    except Exception as e:
+        logging.error(f"error occured: {str(e)}", exc_info=True)
+        return jsonify({"error": "internal server error is there "}), 500
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
+    
+'''
+import os
+import gitlab
+import logging
+from dotenv import load_dotenv
+from fastapi import FastAPI
+
+load_dotenv()
+
+gitlab_base_url = os.getenv('GITLAB_URL')
+api_key = os.getenv('GITLAB_API_KEY')
+
+gl = gitlab.Gitlab(gitlab_base_url, private_token=api_key)
+gl.auth()
+
+app = FastAPI()
+
+
+@app.get("/group/{group_id}/projects")
+def get_group_projects(group_id: int):
+    group = gl.groups.get(group_id)
+    projects = group.projects.list(all=True)
+    return {"projects": [project.name for project in projects]}
+
+
+@app.get("/group/{group_id}/project/{project_id}/repositories")
+def get_project_repositories(group_id: int, project_id: int):
+    project = gl.projects.get(project_id)
+    repositories = gl.projects.list(all=True)
+    
+    logging.basicConfig(filename='main.log', level=logging.NOTSET,
+                    format='%(asctime)s -  %(levelname)s - %(message)s')
+    return {"repositories": [repo.name for repo in repositories]}
+helm template . --values values.yaml
+
+'''
