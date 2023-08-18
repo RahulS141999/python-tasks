@@ -1,0 +1,133 @@
+#.env
+GITLAB_API_KEY = glpat-Xnoq6CBYDbNt1aQahrCe
+GITLAB_URL = https://gitlab.com
+
+#revised in task 13(not working)
+
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+gitlab_url = os.getenv('GITLAB_URL')
+api_key = os.getenv('GITLAB_API_KEY')
+
+
+
+
+def create_update_readme(proj_name, file_name, file_content):
+    gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+    try:
+        project = gl.projects.create({'name': proj_name})
+
+        project.files.create({'file_path': file_name, 'content': file_content, 'branch': 'main', 'commit_message': 'Initial commit'})
+
+        print(f"project {proj_name} created successfully. File {file_name} added")
+
+    except Exception as e:
+        print("Errors is getting : ", {e})
+
+proj_name = "MyProject"
+file_name = "README.md"
+file_content = "Hi, This is readme file"
+
+create_update_readme(proj_name, file_name, file_content) 
+
+
+
+'''import gitlab
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # load_dotenv()  
+
+#load all the variables in the .env file
+
+gitlab_url = os.getenv('GITLAB_URL')
+api_key = os.getenv('GITLAB_API_KEY')
+
+gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+
+#creating new project
+proj_name = "my-project"
+proj_description = 'My new project'
+project = gl.projects.create({'name': proj_name, 'description': proj_description})
+
+#creating files in project with text
+file_path = 'README.md'
+file_content = 'This is readme file'
+project.files.create({'file_path': file_path, 'content': file_content, 'branch': 'master', 'commit_message': 'addfile'})
+print(f"project '{proj_name}' created successfully.")
+print(f"file '{file_path}' added successfully to repo")'''
+
+
+
+#update_readme.py
+import gitlab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+gitlab_url= os.getenv("GITLAB_URL")
+gitlab_api_key = os.getenv("GITLAB_API_KEY")
+
+def update_readme(proj_name, new_content):
+    gl = gitlab.Gitlab(gitlab_url,private_token= gitlab_api_key)
+    gl.auth()
+
+
+    try:
+        project = gl.projects.get(proj_name)
+
+        file = project.files.get(file_path="README.md",ref="main")
+
+        file.content = new_content
+        file.save(branch= "main", commit_message="Update README.md")
+
+        print(f"README.md file in '{proj_name}' updated successfully")
+
+    except Exception as e:
+        print(f" Error is there : ", {e})
+
+
+proj_name = "MyProject"
+new_content = "This is updated README.md file"
+
+update_readme(proj_name, new_content)
+
+'''def create_project_with_readme(project_name, readme_content, updated_content):
+    gl = gitlab.Gitlab(gitlab_url, private_token=api_key)
+    gl.auth()
+
+    try:
+        project = gl.projects.create({'name': project_name})
+
+        project.files.create({'file_path': 'README.md', 'content': readme_content,
+                             'branch': 'main', 'commit_message': 'Initial commit'})
+
+        repository = project.repository.get()
+
+        branch = repository.branches.get('main')  #
+
+        readme_file = repository.files.get(
+            file_path='README.md', ref=branch.name)
+
+        # update readme file content
+
+        readme_file.content = updated_content
+        readme_file.save(branch=branch.name, commit_message='Update README')
+
+        print("Updated readme content:\n\n{readme_file.content}")
+
+    except  Exception as e:
+        print(f"Error creating project: {e}")
+
+
+project_name = "My New project"
+initial_readme_content = "#welcome to MY Project"
+updated_readme_content = initial_readme_content + "\n\nThis is updated README file"
+create_project_with_readme(project_name,initial_readme_content, updated_readme_content)
+'''
+
