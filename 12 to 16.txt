@@ -1,0 +1,216 @@
+**********12***********
+PAT: glpat-kzo5qsv6WjoQs5ZCrJT3
+
+
+**********13***********
+
+linux123@DESKTOP-Q21SDK4:~$ sudo su
+[sudo] password for linux123:
+root@DESKTOP-Q21SDK4:/home/linux123# ls
+demoproject  home  myfirstproject  practice
+root@DESKTOP-Q21SDK4:/home/linux123# git clone https://glpat-kzo5qsv6WjoQs5ZCrJT3@gitlab.com/RahulS141999/myproject.git
+Cloning into 'myproject'...
+Password for 'https://glpat-kzo5qsv6WjoQs5ZCrJT3@gitlab.com':
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 2.78 KiB | 568.00 KiB/s, done.
+
+
+
+root@DESKTOP-Q21SDK4:/home/linux123# ls
+demoproject  home  myfirstproject  myproject  practice
+root@DESKTOP-Q21SDK4:/home/linux123# cd myproject
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# ls
+README.md
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git branch
+* main
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git branch devlopement
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git checkout devlopement
+Switched to branch 'devlopement'
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# cat > file1.html
+<h1>This is file1</h1>
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# ls
+README.md  file1.html
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git add .
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git commit -m "first commit"
+[devlopement ade53da] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file1.html
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git push
+fatal: The current branch devlopement has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin devlopement
+
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git push -u https://gitlab.com/RahulS141999/myproject.git
+Username for 'https://gitlab.com': RahulS141999
+Password for 'https://RahulS141999@gitlab.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 301 bytes | 301.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote:
+remote: To create a merge request for devlopement, visit:
+remote:   https://gitlab.com/RahulS141999/myproject/-/merge_requests/new?merge_request%5Bsource_branch%5D=devlopement
+remote:
+To https://gitlab.com/RahulS141999/myproject.git
+ * [new branch]      devlopement -> devlopement
+Branch 'devlopement' set up to track remote branch 'devlopement' from 'https://gitlab.com/RahulS141999/myproject.git'.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git log
+commit ade53dac9264d67b104b684fb2c808d3dd5b4a8c (HEAD -> devlopement)
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 24 12:22:37 2023 +0530
+
+    first commit
+
+commit 1a2904c6d2516fc51efa01fb94a9dfc6b8b84b23 (origin/main, origin/HEAD, main)
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 24 06:19:28 2023 +0000
+
+    Initial commit
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git revert ade53dac9264d67b104b684fb2c808d3dd5b4a8c
+Removing file1.html
+[devlopement 7b10f8f] Reverting "first commit"
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 file1.html
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git log --oneline
+7b10f8f (HEAD -> devlopement) Reverting "first commit"
+ade53da first commit
+1a2904c (origin/main, origin/HEAD, main) Initial commit
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git push -u https://gitlab.com/RahulS141999/myproject.git
+Username for 'https://gitlab.com': RahulS141999
+Password for 'https://RahulS141999@gitlab.com':
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (1/1), done.
+Writing objects: 100% (2/2), 265 bytes | 265.00 KiB/s, done.
+Total 2 (delta 0), reused 0 (delta 0)
+remote:
+remote: To create a merge request for devlopement, visit:
+remote:   https://gitlab.com/RahulS141999/myproject/-/merge_requests/new?merge_request%5Bsource_branch%5D=devlopement
+remote:
+To https://gitlab.com/RahulS141999/myproject.git
+   ade53da..7b10f8f  devlopement -> devlopement
+Branch 'devlopement' set up to track remote branch 'devlopement' from 'https://gitlab.com/RahulS141999/myproject.git'.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git branch
+* devlopement
+  main
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+
+******************14**********************
+
+
+
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git branch UAT
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git checkout UAT
+Switched to branch 'UAT'
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git add .
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git commit -m "file created in UAT"
+[UAT 4f45bac] file created in UAT
+ 1 file changed, 2 insertions(+)
+ create mode 100644 file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git log
+commit 4f45bac7c80d819c67d86e1a21d2348d1b73d7f6 (HEAD -> UAT)
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 24 13:20:25 2023 +0530
+
+    file created in UAT
+
+commit 1a2904c6d2516fc51efa01fb94a9dfc6b8b84b23 (origin/main, origin/HEAD)
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 24 06:19:28 2023 +0000
+
+    Initial commit
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git stash
+Saved working directory and index state WIP on UAT: 4f45bac file created in UAT
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# vi new_file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git stash list
+stash@{0}: WIP on UAT: 4f45bac file created in UAT
+root@DESKTOP-Q21SDK4:/home/linux123/myproject#
+
+
+
+
+**********15**********
+
+
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git checkout main
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 1 commit.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git clone https://github.com/chiducaf/sample-train.git
+Cloning into 'sample-train'...
+remote: Enumerating objects: 1503, done.
+remote: Counting objects: 100% (27/27), done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 1503 (delta 17), reused 1 (delta 1), pack-reused 1476
+Receiving objects: 100% (1503/1503), 53.96 MiB | 4.58 MiB/s, done.
+Resolving deltas: 100% (137/137), done.
+Updating files: 100% (2480/2480), done.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# ls
+README.md  file.txt  new_file.txt  sample-train
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        new_file.txt
+        sample-train/
+
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git add .
+warning: adding embedded git repository: sample-train
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint:   git submodule add <url> sample-train
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint:   git rm --cached sample-train
+hint:
+hint: See "git help submodule" for more information.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git commit -m "clone repo added"
+[main 16c665f] clone repo added
+ 2 files changed, 2 insertions(+)
+ create mode 100644 new_file.txt
+ create mode 160000 sample-train
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# git push -u https://gitlab.com/RahulS141999/myproject.git main
+Username for 'https://gitlab.com': RahulS141999
+Password for 'https://RahulS141999@gitlab.com':
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (6/6), 561 bytes | 187.00 KiB/s, done.
+Total 6 (delta 1), reused 0 (delta 0)
+To https://gitlab.com/RahulS141999/myproject.git
+   1a2904c..16c665f  main -> main
+Branch 'main' set up to track remote branch 'main' from 'https://gitlab.com/RahulS141999/myproject.git'.
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# ls
+README.md  file.txt  new_file.txt  sample-train
+root@DESKTOP-Q21SDK4:/home/linux123/myproject# cd sample-train
+root@DESKTOP-Q21SDK4:/home/linux123/myproject/sample-train# ls
+ Jenkinsfile  'Pictures - Shortcut.lnk'   ccat.bat   jenkins.txt   pom.xml   sonar-project.properties   src   target
+root@DESKTOP-Q21SDK4:/home/linux123/myproject/sample-train# cd
+
+

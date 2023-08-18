@@ -1,0 +1,223 @@
+**************13*************
+linux123@DESKTOP-Q21SDK4:~$ sudo su
+[sudo] password for linux123:
+root@DESKTOP-Q21SDK4:/home/linux123# git clone https://gitlab.com/RahulS141999/myfirstproject.git
+Cloning into 'myfirstproject'...
+Username for 'https://gitlab.com': RahulS141999
+Password for 'https://RahulS141999@gitlab.com':
+remote: Enumerating objects: 30, done.
+remote: Total 30 (delta 0), reused 0 (delta 0), pack-reused 30
+Unpacking objects: 100% (30/30), 2.69 KiB | 30.00 KiB/s, done.
+root@DESKTOP-Q21SDK4:/home/linux123# ls
+home  myfirstproject  practice  project1
+root@DESKTOP-Q21SDK4:/home/linux123# cd myfirstproject
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# ls
+ReadMe.txt  develop.txt  develop2.txt  develop5  file5.txt  test2.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+* master
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git checkout mynewbranch
+Branch 'mynewbranch' set up to track remote branch 'mynewbranch' from 'origin'.
+Switched to a new branch 'mynewbranch'
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+  master
+* mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+  master
+* mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+* master
+  mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch devlopement
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+  devlopement
+* master
+  mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git checkout devlopement
+Switched to branch 'devlopement'
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi index.html
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# cat index.html
+ <h1>Hello</h1>
+
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git add .
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git commit -m "index.html first commit"
+[devlopement de0b193] index.html first commit
+ 1 file changed, 2 insertions(+)
+ create mode 100644 index.html
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# ls
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git push -u https://gitlab.com/RahulS141999/myfirstproject.git devlopement
+Username for 'https://gitlab.com': RahulS141999
+Password for 'https://RahulS141999@gitlab.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 295 bytes | 295.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote:
+remote: To create a merge request for devlopement, visit:
+remote:   https://gitlab.com/RahulS141999/myfirstproject/-/merge_requests/new?merge_request%5Bsource_branch%5D=devlopement
+remote:
+To https://gitlab.com/RahulS141999/myfirstproject.git
+ * [new branch]      devlopement -> devlopement
+Branch 'devlopement' set up to track remote branch 'devlopement' from 'https://gitlab.com/RahulS141999/myfirstproject.git'.
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git log --oneline
+de0b193 (HEAD -> devlopement) index.html first commit
+9174335 (origin/master, origin/HEAD, master) Merge branch 'development' into 'master'
+7e4fac3 Add new file
+45ee3c0  Merge branch 'development' merge to the master
+6148f0f file 5 created
+32d89d3 Revert "file 3 added"
+ee2e80c file 3 added
+8e32366 Revert "2nd commit:"
+974cd53 added develop2.txt file
+96cbb16 added develop.txt file
+e1d67b5 test2.txt added
+062dacb 2nd commit:
+e46172f first commit
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git log
+commit de0b193a95a685470fb9e3bd49f1a3635f3ee6f7 (HEAD -> devlopement)
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Wed Jan 18 10:47:58 2023 +0530
+
+    index.html first commit
+
+commit 9174335978ddf717ffc7699adad457d8be19eb1f (origin/master, origin/HEAD, master)
+Merge: 45ee3c0 7e4fac3
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Wed Jan 18 05:06:48 2023 +0000
+
+    Merge branch 'development' into 'master'
+
+    Draft: Development
+
+    See merge request RahulS141999/myfirstproject!1
+
+commit 7e4fac37e7446dfbab2cb282a3ce2c1d8b54036f
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Wed Jan 18 05:06:02 2023 +0000
+
+    Add new file
+
+commit 45ee3c0378bcafed0ceaf189cc7c4e07fd1de473
+Merge: 6148f0f 974cd53
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 17 06:48:34 2023 +0000
+
+     Merge branch 'development' merge to the master
+
+commit 6148f0f20cc2082c6eda8cfca8d86381b5262e3b
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 17 06:45:57 2023 +0000
+
+    file 5 created
+
+commit 32d89d390dcaea69615a982070d2c08c0c9b646f
+Author: Rahul Sawant <rsawant141999@gmail.com>
+Date:   Tue Jan 17 06:41:51 2023 +0000
+
+    Revert "file 3 added"
+
+    This reverts commit ee2e80c8edebb0d744d2a50d74e1ef75a52cd1d0.
+
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git revert de0b193a95a685470fb9e3bd49f1a3635f3ee6f7
+Removing index.html
+[devlopement f214c3b] :Revert "index.html first commit"
+ 1 file changed, 2 deletions(-)
+ delete mode 100644 index.html
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git log --oneline
+f214c3b (HEAD -> devlopement) :Revert "index.html first commit"
+de0b193 index.html first commit
+9174335 (origin/master, origin/HEAD, master) Merge branch 'development' into 'master'
+7e4fac3 Add new file
+45ee3c0  Merge branch 'development' merge to the master
+6148f0f file 5 created
+32d89d3 Revert "file 3 added"
+ee2e80c file 3 added
+8e32366 Revert "2nd commit:"
+974cd53 added develop2.txt file
+96cbb16 added develop.txt file
+e1d67b5 test2.txt added
+062dacb 2nd commit:
+e46172f first commit
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+* devlopement
+  master
+  mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# ls
+ReadMe.txt  develop.txt  develop2.txt  develop5  file5.txt  test2.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git push -u https://gitlab.com/RahulS141999/myfirstproject.git
+Username for 'https://gitlab.com': Rahuls141999
+Password for 'https://Rahuls141999@gitlab.com':
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 262 bytes | 262.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote:
+remote: To create a merge request for devlopement, visit:
+remote:   https://gitlab.com/RahulS141999/myfirstproject/-/merge_requests/new?merge_request%5Bsource_branch%5D=devlopement
+remote:
+To https://gitlab.com/RahulS141999/myfirstproject.git
+   de0b193..f214c3b  devlopement -> devlopement
+Branch 'devlopement' set up to track remote branch 'devlopement' from 'https://gitlab.com/RahulS141999/myfirstproject.git'.
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# ls
+ReadMe.txt  develop.txt  develop2.txt  develop5  file5.txt  test2.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+* devlopement
+  master
+  mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch UAT
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git branch
+  UAT
+  devlopement
+* master
+  mynewbranch
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git checkout UAT
+Switched to branch 'UAT'
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# touch file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git stash
+No local changes to save
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git add .
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git commit -m  "file.txt commit"
+[UAT 83f5f5f] file.txt commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git stash
+Saved working directory and index state WIP on UAT: 83f5f5f file.txt commit
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git stash  list
+stash@{0}: WIP on UAT: 83f5f5f file.txt commit
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# touch new_file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# vi new_file.txt
+root@DESKTOP-Q21SDK4:/home/linux123/myfirstproject# git stash  list
+stash@{0}: WIP on UAT: 83f5f5f file.txt commit
+
+
+--------------------Assignment 15---------------------------------
+
+root@DESKTOP-Q21SDK4:/home/linux123# git clone https://github.com/chiducaf/sample-train.git
+Cloning into 'sample-train'...
+remote: Enumerating objects: 1503, done.
+remote: Counting objects: 100% (27/27), done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 1503 (delta 17), reused 1 (delta 1), pack-reused 1476
+Receiving objects: 100% (1503/1503), 53.96 MiB | 4.28 MiB/s, done.
+Resolving deltas: 100% (137/137), done.
+Updating files: 100% (2480/2480), done.
+root@DESKTOP-Q21SDK4:/home/linux123# ls
+home  myfirstproject  practice  project1  sample-train
+root@DESKTOP-Q21SDK4:/home/linux123# cd sample-train
+root@DESKTOP-Q21SDK4:/home/linux123/sample-train# ls
+ Jenkinsfile  'Pictures - Shortcut.lnk'   ccat.bat   jenkins.txt   pom.xml   sonar-project.properties   src   target
+root@DESKTOP-Q21SDK4:/home/linux123/sample-train#
+

@@ -1,0 +1,52 @@
+import os
+import gitlab
+import uvicorn
+import logging
+from fastapi import FastAPI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app = FastAPI()
+gitlab_base_url = os.getenv("GITLAB_BASE_URL")
+gitlab_api_key = os.getenv("GITLAB_API_KEY")
+
+gl = gitlab.Gitlab(url=gitlab_base_url, private_token=gitlab_api_key)
+gl.auth()
+
+logging.basicConfig(filename='app.log', level=logging.NOTSET,
+                    format='%(asctime)s -  %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+
+@app.post("/create_project/{project_name}")
+async def create_gitlab_projects(project_name: str):
+    try:
+        gl.projects.create({
+            'name': 'project102',
+        }
+        )
+        logger.info(f"new gitlab project '{project_name}' created succesfully")
+        return {"msg": f"new project '{project_name} created"}
+
+    except Exception as e:
+        logger.error(f" error creating gitlab project: {str(e)}")
+        return {"message ": " error creating gitlab project"}
+
+
+
+@app.post("update_files/{project_name}")
+async def update_readme(project_name: str):
+    try:
+        project = gl.projects.get(project_name)
+        content = 'this is readme file and welcome to project 101'
+        gl.projects.get({'filepath': 'README.md',
+                         'file_content': content,
+                         'branch': 'main',
+                         'commit message': 'first commit with readme',
+                         }) # type: ignore
+        logger.info(f"new gitlab files is updated in {project_name}")
+        return{"msg": f"new file in {project_name} is updated"}
+    except Exception as e:
+        logger.error(f"error is there in updating files : {str(e)}")
+        return{f"message: error in updating files"}
