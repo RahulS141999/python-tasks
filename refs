@@ -1,2 +1,9 @@
 #install minikube on ec2
 #https://www.radishlogic.com/kubernetes/running-minikube-in-aws-ec2-ubuntu/#:~:text=EC2%20%3E%3E%20%28Network%20%26%20Security%29%20Security%20Groups%20%3E%3E,a%20web%20browser.%20The%20address%20is%20%3Cipv4_public_ip%3E%3A%20%3Cec2_port%3E.
+Top 5 websites to help you get started with hands-on AWS projects:
+
+1️⃣ developers.aws
+2️⃣ workshops.aws
+3️⃣ skillbuilder.aws
+4️⃣ community.aws
+5️⃣ studiolab.sagemaker.aws
