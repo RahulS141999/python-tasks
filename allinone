@@ -1,0 +1,50 @@
+task1 create a python module for loading data of Json file, load Json file to display data in python data type.
+
+task2 create a module to upload simple dictionary to YAML format data file using python.
+
+task3 create a module and load YAML file to display data in python data type.
+
+task 4 write a program for downloading/accessing data using urllib3 from any online website
+
+task 5 write a program for, using FastApi and check it message is display on browser.
+
+task6. Create python function for Parse an encoded string that accepts an encoded string as a parameter and string will contain a first name, last name, and an id.
+
+*An example input would be “Robert000Smith000123”. The function should return the following using that input:*
+
+*{“first_name”: “Robert”, “last_name”: “Smith”, “id”: “123”}*
+
+task 7: Write a python program module to access GitLab using GitLab package and authenticate GitLab using Api key or username password.
+
+task8: Create a function in Python that accepts one parameter: a string that’s a sentence.
+
+This function should return True if any word in that sentence contains duplicate letters and False if not.
+
+task 9: create new project by loading all the variables in the .env file, create new project and files in it using GitLab module
+
+task10: write a script using python for create project file using GitLab module and update the files and commit it.
+
+task 11: write a python script for list out branches using project id and create and delete according to requirement
+
+task12: Decorator with parameter
+
+example:
+
+@decorator ("this is decorator")
+
+def func(n):
+
+```
+return n
+
+```
+
+task13: hybrid Inheritance with mro to find which class inheritance.
+
+task14: logging module with NO SET as default logging setup
+
+task15: Use Fast Api with uvicorn to create separate REST API to access group project, repo & files using GitLab module.
+
+task16: create a fast Api project using pydantic model and use logging at notset level, use REST API (get, post, put, delete) and perform actions create project, modify files and data, delete it and access it through Api endpoints.
+
+task17: create a Helm chart for any tool, that should be running in Node Port, it should have deployment, PV, PVC, Services (done for tomcat and Jenkins)
