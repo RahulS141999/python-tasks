@@ -1,0 +1,122 @@
+Using rancher we can deploy,operate and sercure multiple k8s clusters acros any infra aks,eks,gke etc.
+
+Rancher needed for multiple cluster management
+
+
+**What is the use cases of multi kubernetes management**
+
+Provisioning multi cloud with k8s so deploy to any k8s cluster across clouds
+Distributed apps workloads
+Standardized monitoring for k8s across any cloud
+Reduce k8s complexity
+
+
+**Features**
+1.Cluster deployment,operations,security &management
+2.App workload management(intergrate with cid,gitops)
+3.Open source with enterprise
+obserability for public,private,on-prem clouds(unified multi cluster app management)
+rancher manages(cluster,namespace,node,pod,deployment,workload)
+
+
+**Hosted On**
+
+rancher can be hosted on :- linux host(VM) running docker ,suse hosted(mange k8s on own VM),on cloud k8s cluster(manage k8s on VM such AWS)
+rancher,hosted rancher service,rke,k3s,longhorn
+
+
+**What is Rancher Architecture Overview**
+
+##https://ranchermanager.docs.rancher.com/reference-guides/rancher-manager-architecture/communicating-with-downstream-user-clusters 
+
+main part is Rancher server, it includes all components to manange entire Rancher Deployment
+Rancher deployed as group of ns,deployments,pods,services,ingresses on single node (on high availabity cluster)
+
+
+**Communicating with Downstream User Clusters**
+
+1.Authentications proxy:- it forwards all k8s api calls to downstream cluster
+
+2.Cluster controllers and cluster agents: there is one cluster controller and cluster agents for each downstream cluster(cluster created using rancher server)
+  downstream cluster have cluster agents which open tunnel to the cluster controller within rancher server 
+
+3.Node agents: It runs as Daemonset on every node in Rancher launched k8s clusters,it interacts with node performing cluster operations 
+
+4.Authorized Cluster endpoint: it allows users to connect to k8s api server of rancher launched downstream cluster without having route 
+    their request through rancher authentications proxy
+
+
+** Rancher Server Components **
+
+1.UI- Rancher UI+Rancher API UI
+2.API framework & types: Norman and types
+3.Utilities- Rancher CLI and catalog apps
+
+
+**Deploy and Manage K8s with Rancher(deploy ,manage rancher , deploying and manage k8s with rancher)**
+
+
+requirements: OS(linux), Container Runtime(Docker), Ingress(to manage multple node balancers), disks(performance depends on etcd in the k8s cluster),
+networking(each node have a static ip)
+
+
+**How to DEPLOY RANCHER using Helm chart (most common) on existing k8s cluster?(can do also using terraform ,vagrant,manual)**
+
+requirements for rancher helm deployment:
+k8s cluster, cli tools(kubectl,helm), ingress(for prod ingress controller and for dev load balancer), SSL config(TLS cert)
+
+
+##https://ranchermanager.docs.rancher.com/reference-guides/rancher-manager-architecture/communicating-with-downstream-user-clusters 
+
+
+Steps to deploy rancher on cluster:
+
+1.Add the helm chart repo to k8s cluster
+2.Create ns for rancher
+3.Choose ssl config
+4.Install cert-manager
+5.Install rancher with helm and cert option
+6.Cerify rancher is successfully deployed
+
+** How to ADD MORE CLUSTER on Rancher **
+
+1.Go to cluster management and add cloud credentials (like aws,google,azure etc)
+2.Create a new cluster(on hosted k8s provider or using existing nodes and create cluster using rke(rke-ranchers k8s version for deploymnent))
+
+
+
+
+Authentication & Authorization
+
+https://ranchermanager.docs.rancher.com/v2.7/pages-for-subheaders/authentication-permissions-and-global-configuration
+
+Global persmission with Access types/roles
+
+administrator : full control over all installations and resources
+restricted administrator: have control over all downstream cluster but no access to local cluster
+standard user: can create new cluster and manage it  and projects they have granted access
+user-base: login-access only
+
+
+Cluster and Project roles
+
+Cluster Owner: have full contol over cluster & resources in it
+Cluster Member: users can view  cluster level resources and create new projects
+
+Project Member: users can manage project resources and like namespaces & workloads
+Read Only: users can view everything in the project
+
+Authentications works:
+rancher adds centralized user authentications to k8s cluster, Rancher authentications proxy powers the centrlized user authentication, 
+Rancher proxy authenticates users then forwards requests they  have to downstream k8s cluster utilizing a service account,
+
+
+Authorization in Rancher:
+Ranher relies on user and groups to determine who is allowed to login to it and which resources they can access
+Once the user logs in to Rancher, their authorization, rights within system,is determined by GLOBAL permissions,and CLUSTER and PROJECT roles
+for groups, all users who are member of that group in auth provider will able acccess the resource with permissions that we specified
+
+
+MANAGE RANCHER-projects
+
+DEPLOY & MANAGE k8s with Rancher
