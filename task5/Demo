@@ -1,0 +1,65 @@
+jimport docker
+import requests
+
+def pull_image(source_repo_url, image_name, image_tag, auth=None):
+    """
+    Pull Docker image from a source Artifactory repository.
+
+    Parameters:
+    - source_repo_url (str): URL of the source Artifactory repository.
+    - image_name (str): Name of the Docker image.
+    - image_tag (str): Tag of the Docker image.
+    - auth (tuple, optional): Tuple containing the username and password for Artifactory authentication.
+
+    Returns:
+    - None
+    """
+    client = docker.from_env()
+
+    # Form the complete image reference
+    image_ref = f"{source_repo_url}/{image_name}:{image_tag}"
+
+    # Pull the Docker image
+    client.images.pull(image_ref, auth_config=auth)
+
+def push_image(target_repo_url, image_name, image_tag, auth=None):
+    """
+    Push Docker image to a target Artifactory repository.
+
+    Parameters:
+    - target_repo_url (str): URL of the target Artifactory repository.
+    - image_name (str): Name of the Docker image.
+    - image_tag (str): Tag of the Docker image.
+    - auth (tuple, optional): Tuple containing the username and password for Artifactory authentication.
+
+    Returns:
+    - None
+    """
+    client = docker.from_env()
+
+    # Form the complete image references
+    source_image_ref = f"{client.images.get(image_name).id}"
+    target_image_ref = f"{target_repo_url}/{image_name}:{image_tag}"
+
+    # Tag the Docker image for the target repository
+    client.images.get(image_name).tag(target_image_ref)
+
+    # Push the Docker image to the target repository
+    client.images.push(target_image_ref, auth_config=auth)
+
+def main():
+    # Example usage
+    source_repo_url = "https://source.artifactory.com/docker-repo"
+    target_repo_url = "https://target.artifactory.com/docker-repo"
+    image_name = "your-docker-image"
+    image_tag = "latest"
+    auth = ("your-username", "your-password")
+
+    # Pull image from the source repository
+    pull_image(source_repo_url, image_name, image_tag, auth)
+
+    # Push image to the target repository
+    push_image(target_repo_url, image_name, image_tag, auth)
+
+if __name__ == "__main__":
+    main()
